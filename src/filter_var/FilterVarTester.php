@@ -8,7 +8,6 @@ declare(strict_types=1);
 namespace pvc\validator\filter_var;
 
 use pvc\interfaces\validator\val_tester\ValTesterStringInterface;
-use pvc\validator\err\UnsetFilterException;
 
 /**
  * Class ValidatorText
@@ -50,7 +49,14 @@ abstract class FilterVarTester implements ValTesterStringInterface
         $this->optionsArray['flags'][] = $filterFlag;
     }
 
-    abstract public function getMsgId(): string;
+    /**
+     * getMsgId
+     * @return string
+     */
+    public function getMsgId(): string
+    {
+        return '';
+    }
 
     public function getMsgParameters(): array
     {

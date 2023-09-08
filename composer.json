@@ -21,27 +21,16 @@
 	},
 	"minimum-stability": "dev",
 	"require": {
-		"ext-curl": "*",
-		"ext-intl": "*",
-		"ext-dom": "*",
-		"ext-fileinfo": "*",
-		"ext-libxml": "*",
-		"ext-simplexml": "*",
 		"php-di/php-di": "*",
 		"pvc/err": "*",
 		"pvc/msg": "*",
 		"pvc/interfaces": "*",
-		"pvc/intl": "*",
 		"pvc/regex": "*",
-		"pvc/struct": "*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9",
 		"squizlabs/php_codesniffer": "*",
 		"friendsofphp/php-cs-fixer": "*",
-		"guzzlehttp/guzzle": "*",
-		"rexxars/html-validator": "*",
 		"phpstan/phpstan": "*",
-		"pvc/testing-traits": "*"
 	}
 }

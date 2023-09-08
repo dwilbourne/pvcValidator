@@ -39,7 +39,10 @@ abstract class MinMaxTester implements ValTesterMinMaxInterface
      * wording and formatting of the messages depends on the data type of the value that is being validated
      * @return string
      */
-    abstract public function getMsgId(): string;
+    public function getMsgId(): string
+    {
+        return '';
+    }
 
     /**
      * getMsgParameters
