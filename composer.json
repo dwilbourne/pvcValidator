@@ -31,6 +31,6 @@
 		"phpunit/phpunit": "^9",
 		"squizlabs/php_codesniffer": "*",
 		"friendsofphp/php-cs-fixer": "*",
-		"phpstan/phpstan": "*",
+		"phpstan/phpstan": "*"
 	}
 }
