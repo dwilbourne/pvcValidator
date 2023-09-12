@@ -73,29 +73,14 @@ class FilterVarTesterTest extends ValTesterMaster
     }
 
     /**
-     * testConstruct
-     * @covers \pvc\validator\filter_var\FilterVarTester::__construct
-     */
-    public function testConstruct(): void
-    {
-        $testFilter = FILTER_VALIDATE_URL;
-        $this->tester = $this->getMockBuilder(FilterVarTester::class)
-                             ->setConstructorArgs([$testFilter])
-                             ->getMockForAbstractClass();
-        self::assertEquals($testFilter, $this->tester->getFilter());
-    }
-
-    /**
      * testValidateSucceeds
      * @covers \pvc\validator\filter_var\FilterVarTester::testValue
      */
     public function testValidateSucceeds(): void
     {
         $testFilter = FILTER_VALIDATE_URL;
-        $this->tester = $this->getMockBuilder(FilterVarTester::class)
-                             ->setConstructorArgs([$testFilter])
-                             ->getMockForAbstractClass();
-
+        $this->tester = $this->getMockForAbstractClass(FilterVarTester::class);
+        $this->tester->setFilter($testFilter);
         $goodUrlString = 'http://www.somehost.com/support';
         self::assertTrue($this->tester->testValue($goodUrlString));
     }
@@ -108,9 +93,8 @@ class FilterVarTesterTest extends ValTesterMaster
     public function testValidateFails(): void
     {
         $testFilter = FILTER_VALIDATE_URL;
-        $this->tester = $this->getMockBuilder(FilterVarTester::class)
-                             ->setConstructorArgs([$testFilter])
-                             ->getMockForAbstractClass();
+        $this->tester = $this->getMockForAbstractClass(FilterVarTester::class);
+        $this->tester->setFilter($testFilter);
         $badUrlString = 'notUrl';
         self::assertFalse($this->tester->testValue($badUrlString));
     }

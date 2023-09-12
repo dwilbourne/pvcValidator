@@ -16,15 +16,7 @@ class MinMaxIntegerTesterTest extends ValTesterMaster
     {
         $min = 0;
         $max = 5;
-        $this->tester = new MinMaxIntegerTester($min, $max);
-    }
-
-    /**
-     * testConstruct
-     * @covers \pvc\validator\min_max\MinMaxIntegerTester::__construct
-     */
-    public function testConstruct(): void
-    {
-        self::assertInstanceOf(MinMaxIntegerTester::class, $this->tester);
+        $this->tester = new MinMaxIntegerTester();
+        $this->tester->setMinMax($min, $max);
     }
 }

@@ -17,15 +17,7 @@ class MinMaxFloatTesterTest extends ValTesterMaster
     {
         $min = 1.1;
         $max = 5.76;
-        $this->tester = new MinMaxFloatTester($min, $max);
-    }
-
-    /**
-     * testConstruct
-     * @covers \pvc\validator\min_max\MinMaxFloatTester::__construct
-     */
-    public function testConstruct(): void
-    {
-        self::assertInstanceOf(MinMaxFloatTester::class, $this->tester);
+        $this->tester = new MinMaxFloatTester();
+        $this->tester->setMinMax($min, $max);
     }
 }

@@ -69,21 +69,40 @@ class MinMaxTesterTest extends ValTesterMaster
     }
 
     /**
-     * testConstruct
-     * @covers \pvc\validator\min_max\MinMaxTester::__construct
+     * testSetMinSucceeds
      * @covers \pvc\validator\min_max\MinMaxTester::setMin
-     * @covers \pvc\validator\min_max\MinMaxTester::getMin
+     */
+    public function testSetMinSucceeds(): void
+    {
+        $min = 5;
+        $this->tester->setMin($min);
+        self::assertEquals($min, $this->tester->getMin());
+    }
+
+    /**
+     * testSetMaxSucceeds
      * @covers \pvc\validator\min_max\MinMaxTester::setMax
+     */
+    public function testSetMaxSucceeds(): void
+    {
+        $max = 5;
+        $this->tester->setMax($max);
+        self::assertEquals($max, $this->tester->getMax());
+    }
+
+    /**
+     * testSetMinMax
+     * @covers \pvc\validator\min_max\MinMaxTester::setMinMax
+     * @covers \pvc\validator\min_max\MinMaxTester::getMin
      * @covers \pvc\validator\min_max\MinMaxTester::getMax
      *
      */
-    public function testConstruct(): void
+    public function testSetMinMax(): void
     {
         $min = 0;
         $max = 5;
-        $this->tester = $this->getMockBuilder(MinMaxTester::class)
-                             ->setConstructorArgs([$min, $max])
-                             ->getMockForAbstractClass();
+        $this->tester = $this->getMockForAbstractClass(MinMaxTester::class);
+        $this->tester->setMinMax($min, $max);
         self::assertEquals($min, $this->tester->getMin());
         self::assertEquals($max, $this->tester->getMax());
     }
@@ -97,9 +116,9 @@ class MinMaxTesterTest extends ValTesterMaster
         $min = 6;
         $max = 10;
         $data = 4;
-        $this->tester = $this->getMockBuilder(MinMaxTester::class)
-                             ->setConstructorArgs([$min, $max])
-                             ->getMockForAbstractClass();
+        $this->tester = $this->getMockForAbstractClass(MinMaxTester::class);
+        $this->tester->setMin($min);
+        $this->tester->setMax($max);
         self::assertFalse($this->tester->testValue($data));
     }
 
@@ -112,9 +131,9 @@ class MinMaxTesterTest extends ValTesterMaster
         $min = 6;
         $max = 10;
         $data = 15;
-        $this->tester = $this->getMockBuilder(MinMaxTester::class)
-                             ->setConstructorArgs([$min, $max])
-                             ->getMockForAbstractClass();
+        $this->tester = $this->getMockForAbstractClass(MinMaxTester::class);
+        $this->tester->setMin($min);
+        $this->tester->setMax($max);
         self::assertFalse($this->tester->testValue($data));
     }
 
@@ -127,9 +146,9 @@ class MinMaxTesterTest extends ValTesterMaster
         $min = 6;
         $max = 10;
         $data = 8;
-        $this->tester = $this->getMockBuilder(MinMaxTester::class)
-                             ->setConstructorArgs([$min, $max])
-                             ->getMockForAbstractClass();
+        $this->tester = $this->getMockForAbstractClass(MinMaxTester::class);
+        $this->tester->setMin($min);
+        $this->tester->setMax($max);
         self::assertTrue($this->tester->testValue($data));
     }
 }

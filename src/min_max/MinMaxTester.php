@@ -28,12 +28,6 @@ abstract class MinMaxTester implements ValTesterMinMaxInterface
      */
     protected $max;
 
-    public function __construct(mixed $min, mixed $max)
-    {
-        $this->setMin($min);
-        $this->setMax($max);
-    }
-
     /**
      * getMsgId
      * wording and formatting of the messages depends on the data type of the value that is being validated
@@ -55,11 +49,11 @@ abstract class MinMaxTester implements ValTesterMinMaxInterface
     }
 
     /**
-     * @return DataType
+     * @return DataType|null
      */
     public function getMin(): mixed
     {
-        return $this->min;
+        return $this->min ?? null;
     }
 
     /**
@@ -84,11 +78,11 @@ abstract class MinMaxTester implements ValTesterMinMaxInterface
     }
 
     /**
-     * @return DataType
+     * @return DataType|null
      */
     public function getMax(): mixed
     {
-        return $this->max;
+        return $this->max ?? null;
     }
 
     /**
@@ -107,12 +101,25 @@ abstract class MinMaxTester implements ValTesterMinMaxInterface
     }
 
     /**
+     * setMinMax
+     * @param DataType $min
+     * @param DataType $max
+     * @throws SetMaxException
+     * @throws SetMinException
+     */
+    public function setMinMax($min, $max): void
+    {
+        $this->setMin($min);
+        $this->setMax($max);
+    }
+
+    /**
      * validate
      * @param DataType $value
-     * @return bool
+     * @return bool|null
      */
-    public function testValue($value): bool
+    public function testValue($value): bool|null
     {
-        return ($value >= $this->getMin()) && ($value <= $this->getMax());
+        return ($this->getMin() && $this->getMax() ? ($value >= $this->getMin()) && ($value <= $this->getMax()) : null);
     }
 }

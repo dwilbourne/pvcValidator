@@ -23,20 +23,11 @@ class RegexTester implements ValTesterInterface
     protected RegexInterface $regex;
 
     /**
-     * RegexTester constructor.
-     * @param RegexInterface $regex
+     * @return RegexInterface|null
      */
-    public function __construct(RegexInterface $regex)
+    public function getRegex(): ?RegexInterface
     {
-        $this->setRegex($regex);
-    }
-
-    /**
-     * @return RegexInterface
-     */
-    public function getRegex(): RegexInterface
-    {
-        return $this->regex;
+        return $this->regex ?? null;
     }
 
     /**
@@ -59,20 +50,20 @@ class RegexTester implements ValTesterInterface
 
     /**
      * getMsgParameters
-     * @return array|mixed[]
+     * @return array<string>
      */
     public function getMsgParameters(): array
     {
-        return ['regex_label' => $this->regex->getLabel()];
+        return ($this->getRegex() ? ['regex_label' => $this->regex->getLabel()] : []);
     }
 
     /**
      * validate
      * @param string $value
-     * @return bool
+     * @return bool|null
      */
-    public function testValue(mixed $value): bool
+    public function testValue(mixed $value): bool|null
     {
-        return $this->regex->match($value);
+        return $this->getRegex()?->match($value);
     }
 }

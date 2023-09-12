@@ -13,20 +13,11 @@ use pvcTests\validator\ValTesterMaster;
 
 class MinMaxDateTesterTest extends ValTesterMaster
 {
-
     public function setUp(): void
     {
-        $fromDate = new DateTime('2023-01-01');
-        $toDate = new DateTime('2023-12-31');
-        $this->tester = new MinMaxDateTester($fromDate, $toDate);
-    }
-
-    /**
-     * testConstruct
-     * @covers \pvc\validator\min_max\MinMaxDateTester::__construct
-     */
-    public function testConstruct(): void
-    {
-        self::assertInstanceOf(MinMaxDateTester::class, $this->tester);
+        $min = new DateTime('2022-01-01');
+        $max = new DateTime('2022-12-31');
+        $this->tester = new MinMaxDateTester();
+        $this->tester->setMinMax($min, $max);
     }
 }

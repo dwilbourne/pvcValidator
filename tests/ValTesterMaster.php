@@ -22,6 +22,7 @@ class ValTesterMaster extends TestCase
      * @covers \pvc\validator\min_max\MinMaxDateTester::getMsgId
      * @covers \pvc\validator\min_max\MinMaxFloatTester::getMsgId
      * @covers \pvc\validator\min_max\MinMaxIntegerTester::getMsgId
+     * @covers \pvc\validator\min_max\MinMaxTester::getMsgId
      * @covers \pvc\validator\regex\RegexTester::getMsgId
      */
     public function testGetMsgId(): void

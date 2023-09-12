@@ -23,16 +23,8 @@ class RegexTesterTest extends ValTesterMaster
     public function setUp(): void
     {
         $this->regex = $this->createMock(RegexInterface::class);
-        $this->tester = new RegexTester($this->regex);
-    }
-
-    /**
-     * testConstruct
-     * @covers \pvc\validator\regex\RegexTester::__construct
-     */
-    public function testConstruct(): void
-    {
-        self::assertInstanceOf(RegexTester::class, $this->tester);
+        $this->tester = new RegexTester();
+        $this->tester->setRegex($this->regex);
     }
 
     /**

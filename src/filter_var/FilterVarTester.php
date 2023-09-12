@@ -28,14 +28,6 @@ abstract class FilterVarTester implements ValTesterStringInterface
     ];
 
     /**
-     * @param int $filter
-     */
-    public function __construct(int $filter)
-    {
-        $this->setFilter($filter);
-    }
-
-    /**
      * addOption
      * @param string $filterVarOption
      */
@@ -66,11 +58,12 @@ abstract class FilterVarTester implements ValTesterStringInterface
     /**
      * @function testValue
      * @param string $value
-     * @return bool
+     * @return bool|null
      */
-    public function testValue(mixed $value = ''): bool
+    public function testValue(mixed $value = ''): bool|null
     {
-        return (false !== filter_var($value, $this->getFilter(), $this->getOptionsArray()));
+        return ($this->getFilter() ? (false !== filter_var($value, $this->getFilter(), $this->getOptionsArray())) :
+            null);
     }
 
     /**
