@@ -23,11 +23,11 @@ class RegexTester implements ValTesterInterface
     protected RegexInterface $regex;
 
     /**
-     * @return RegexInterface|null
+     * @return RegexInterface
      */
-    public function getRegex(): ?RegexInterface
+    public function getRegex(): RegexInterface
     {
-        return $this->regex ?? null;
+        return $this->regex;
     }
 
     /**
@@ -54,7 +54,43 @@ class RegexTester implements ValTesterInterface
      */
     public function getMsgParameters(): array
     {
-        return ($this->getRegex() ? ['regex_label' => $this->regex->getLabel()] : []);
+        return ($this->getRegex()->getLabel() ? ['regex_label' => $this->regex->getLabel()] : []);
+    }
+
+    /**
+     * setPattern
+     * @param string $pattern
+     */
+    public function setPattern(string $pattern): void
+    {
+        $this->getRegex()->setPattern($pattern);
+    }
+
+    /**
+     * getPattern
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return $this->getRegex()->getPattern();
+    }
+
+    /**
+     * setLabel
+     * @param string $label
+     */
+    public function setLabel(string $label): void
+    {
+        $this->getRegex()->setLabel($label);
+    }
+
+    /**
+     * getLabel
+     * @return string
+     */
+    public function getLabel(): string
+    {
+        return $this->getRegex()->getLabel();
     }
 
     /**
@@ -64,6 +100,6 @@ class RegexTester implements ValTesterInterface
      */
     public function testValue(mixed $value): bool|null
     {
-        return $this->getRegex()?->match($value);
+        return $this->getRegex()->match($value);
     }
 }

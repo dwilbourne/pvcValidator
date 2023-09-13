@@ -61,4 +61,32 @@ class RegexTesterTest extends ValTesterMaster
         $this->regex->method('match')->with($testValueThatFails)->willReturn(false);
         self::assertFalse($this->tester->testValue($testValueThatFails));
     }
+
+    /**
+     * testSetGetPattern
+     * @covers \pvc\validator\regex\RegexTester::setPattern
+     * @covers \pvc\validator\regex\RegexTester::getPattern
+     */
+    public function testSetGetPattern(): void
+    {
+        $pattern = '/foo/';
+        $this->regex->expects($this->once())->method('setPattern')->with($pattern);
+        $this->regex->method('getPattern')->willReturn($pattern);
+        $this->tester->setPattern($pattern);
+        self::assertEquals($pattern, $this->tester->getPattern());
+    }
+
+    /**
+     * testSetGetLabel
+     * @covers \pvc\validator\regex\RegexTester::setLabel
+     * @covers \pvc\validator\regex\RegexTester::getLabel
+     */
+    public function testSetGetLabel(): void
+    {
+        $label = 'label';
+        $this->regex->expects($this->once())->method('setLabel')->with($label);
+        $this->regex->method('getLabel')->willReturn($label);
+        $this->tester->setLabel($label);
+        self::assertEquals($label, $this->tester->getLabel());
+    }
 }
