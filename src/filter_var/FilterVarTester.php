@@ -12,7 +12,7 @@ use pvc\interfaces\validator\val_tester\ValTesterStringInterface;
 /**
  * Class ValidatorText
  */
-abstract class FilterVarTester implements ValTesterStringInterface
+class FilterVarTester implements ValTesterStringInterface
 {
     /**
      * @var int
