@@ -34,9 +34,10 @@ class RegexTester implements ValTesterInterface
      * @function setRegex
      * @param RegexInterface $regex
      */
-    public function setRegex(RegexInterface $regex): void
+    public function setRegex(RegexInterface $regex): RegexTester
     {
         $this->regex = $regex;
+        return $this;
     }
 
     /**
@@ -61,9 +62,10 @@ class RegexTester implements ValTesterInterface
      * setPattern
      * @param string $pattern
      */
-    public function setPattern(string $pattern): void
+    public function setPattern(string $pattern): RegexTester
     {
         $this->getRegex()->setPattern($pattern);
+        return $this;
     }
 
     /**
@@ -79,9 +81,10 @@ class RegexTester implements ValTesterInterface
      * setLabel
      * @param string $label
      */
-    public function setLabel(string $label): void
+    public function setLabel(string $label): RegexTester
     {
         $this->getRegex()->setLabel($label);
+        return $this;
     }
 
     /**
