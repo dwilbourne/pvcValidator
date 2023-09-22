@@ -54,6 +54,7 @@ class AbstractTesterFactory
     /**
      * makeValTester
      * @return ValTester<DataType>
+     *     TODO: determine why this generic is giving phpstan a hard time
      */
     public function makeValTester(): ValTester
     {
