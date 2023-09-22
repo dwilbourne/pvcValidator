@@ -52,10 +52,10 @@ class ValTester implements ValTesterInterface
 
     /**
      * testValue
-     * @param mixed $value
+     * @param DataType $value
      * @return bool|null
      */
-    public function testValue(mixed $value): ?bool
+    public function testValue($value): ?bool
     {
         $callable = $this->getCallable();
         return (bool) $callable($value);
