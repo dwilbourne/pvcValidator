@@ -65,9 +65,8 @@ class CallableTester extends ValTester
      */
     public function getCallable(): callable
     {
-        $default = function (mixed $value) {
-            return true;
-        };
+        /** @phpcs noinspection */
+        $default = function (mixed $value) { return true; };
         return ($this->callable ?? $default);
     }
 

@@ -12,16 +12,27 @@ use PHPUnit\Framework\TestCase;
 
 class CTypeTesterPrintableTest extends TestCase
 {
+    protected CTypeTesterPrintable $tester;
+
     public function setUp(): void
     {
         $this->tester = new CTypeTesterPrintable();
     }
 
     /**
+     * testConstruct
+     * @covers \pvc\validator\ctype\CTypeTesterPrintable::__construct
+     */
+    public function testConstruct(): void
+    {
+        self::assertInstanceOf(CTypeTesterPrintable::class, $this->tester);
+    }
+
+    /**
      * @dataProvider dataProvider
      * @param string $string
      * @param bool $expectedResult
-     * @covers \pvc\validator\ctype\CTypeTesterAlphaNumeric::testValue
+     * @covers \pvc\validator\ctype\CTypeTesterPrintable::testValue
      */
     public function testValidatorSuccess(string $string, bool $expectedResult): void
     {

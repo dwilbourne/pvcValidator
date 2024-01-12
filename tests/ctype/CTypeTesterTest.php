@@ -7,7 +7,6 @@ declare (strict_types=1);
 
 namespace pvcTests\validator\ctype;
 
-
 use PHPUnit\Framework\TestCase;
 use pvc\validator\ctype\CTypeTester;
 use pvc\validator\err\InvalidLabelException;
