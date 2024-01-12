@@ -19,4 +19,5 @@ return [
     'regex_test_failed' => 'value is not a valid {regex_label}',
     'filter_var_test_failed' => 'value is not a valid {filter_var_label}',
     'not_alnum' => 'value is not a letter or a number',
+    'not_printable' => 'string contains non-printable characters (e.g. control characters)',
 ];
