@@ -23,4 +23,13 @@ class MinMaxDateTester extends MinMaxTester
     {
         return 'invalid_min_max_date';
     }
+
+    /**
+     * getLabel
+     * @return string
+     */
+    public function getLabel(): string
+    {
+        return 'date';
+    }
 }

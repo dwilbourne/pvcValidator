@@ -21,4 +21,14 @@ class MinMaxFloatTester extends MinMaxTester
     {
         return 'invalid_min_max_float';
     }
+
+    /**
+     * getLabel
+     * @return string
+     */
+    public function getLabel(): string
+    {
+        return 'float';
+    }
+
 }

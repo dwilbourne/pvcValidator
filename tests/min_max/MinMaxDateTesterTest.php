@@ -3,21 +3,22 @@
 /**
  * @author: Doug Wilbourne (dougwilbourne@gmail.com)
  */
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace pvcTests\validator\min_max;
 
-use DateTime;
+use PHPUnit\Framework\TestCase;
 use pvc\validator\min_max\MinMaxDateTester;
-use pvcTests\validator\ValTesterMaster;
 
-class MinMaxDateTesterTest extends ValTesterMaster
+/**
+ * Class MinMaxDateTesterTest
+ * @covers \pvc\validator\min_max\MinMaxDateTester
+ */
+class MinMaxDateTesterTest extends TestCase
 {
+    use MsgIdAndLabelTestMethods;
     public function setUp(): void
     {
-        $min = new DateTime('2022-01-01');
-        $max = new DateTime('2022-12-31');
         $this->tester = new MinMaxDateTester();
-        $this->tester->setMinMax($min, $max);
     }
 }

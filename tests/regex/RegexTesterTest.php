@@ -8,18 +8,23 @@
 namespace pvcTests\validator\regex;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use pvc\interfaces\regex\RegexInterface;
+use pvc\interfaces\validator\ValTesterInterface;
 use pvc\regex\Regex;
+use pvc\validator\err\InvalidLabelException;
 use pvc\validator\regex\RegexTester;
-use pvcTests\validator\ValTesterMaster;
+use pvcTests\validator\ValTesterTest;
 
 /**
  * Class ValidatorRegexTest
  */
-class RegexTesterTest extends ValTesterMaster
+class RegexTesterTest extends TestCase
 {
 
     protected RegexInterface|MockObject $regex;
+
+    protected ValTesterInterface|RegexTester $tester;
 
     public function setUp(): void
     {
@@ -78,6 +83,17 @@ class RegexTesterTest extends ValTesterMaster
     }
 
     /**
+     * testSetLabelThrowsExceptionWuthEmptyLabel
+     * @throws InvalidLabelException
+     * @covers \pvc\validator\regex\RegexTester::setLabel
+     */
+    public function testSetLabelThrowsExceptionWuthEmptyLabel(): void
+    {
+        self::expectException(InvalidLabelException::class);
+        $this->tester->setLabel('');
+    }
+
+    /**
      * testSetGetLabel
      * @covers \pvc\validator\regex\RegexTester::setLabel
      * @covers \pvc\validator\regex\RegexTester::getLabel
@@ -90,6 +106,38 @@ class RegexTesterTest extends ValTesterMaster
         $this->tester->setLabel($label);
         self::assertEquals($label, $this->tester->getLabel());
     }
+
+    /**
+     * testGetMsgId
+     * @covers \pvc\validator\regex\RegexTester::getMsgId()
+     */
+    public function testGetMsgId(): void
+    {
+        self::assertIsString($this->tester->getMsgId());
+        $messages = include(__DIR__ . '\..\..\src\messages\ValidatorMessages.en.php');
+        self::assertTrue(array_key_exists($this->tester->getMsgId(), $messages));
+    }
+
+    /**
+     * testGetMsgParameters
+     * @throws \pvc\validator\err\InvalidLabelException
+     * @covers \pvc\validator\regex\RegexTester::getMsgParameters()
+     */
+    public function testGetMsgParameters(): void
+    {
+        $label = 'label';
+
+        $this->regex->expects($this->once())->method('setLabel')->with($label);
+        $this->regex->expects($this->once())->method('getLabel')->willReturn($label);
+        $this->tester->setLabel($label);
+
+        $params = $this->tester->getMsgParameters();
+        foreach ($params as $key => $value) {
+            self::assertIsString($key);
+            self::assertEquals($label, $value);
+        }
+    }
+
 
     /**
      * testFluentSetters

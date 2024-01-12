@@ -7,89 +7,88 @@ declare(strict_types=1);
 
 namespace pvc\validator\filter_var;
 
-use pvc\interfaces\validator\val_tester\ValTesterStringInterface;
+use pvc\filtervar\FilterVarValidate;
+use pvc\validator\err\InvalidLabelException;
+use pvc\validator\ValTester;
 
 /**
  * Class ValidatorText
+ * @extends ValTester<string>
  */
-class FilterVarTester implements ValTesterStringInterface
+class FilterVarTester extends ValTester
 {
-    /**
-     * @var int
-     */
-    protected int $filter;
 
-    /**
-     * @var array<string, array<mixed>>
-     */
-    protected array $optionsArray = [
-        'options' => [],
-        'flags' => [],
-    ];
+    protected FilterVarValidate $filterVar;
+
+    public function getMsgId(): string
+    {
+        return 'filter_var_test_failed';
+    }
+
+    public function getMsgParameters(): array
+    {
+        return ['filter_var_label' => $this->getLabel()];
+    }
+
+    public function getLabel(): string
+    {
+        return $this->filterVar->getLabel();
+    }
+
+    public function setLabel(string $label): FilterVarTester
+    {
+        if (empty($label)) {
+            throw new InvalidLabelException();
+        }
+        $this->filterVar->setLabel($label);
+        return $this;
+    }
+
+    public function setFilter(int $filter): FilterVarTester
+    {
+        $this->getFilterVar()->setFilter($filter);
+        return $this;
+    }
+
+    public function getFilterVar(): FilterVarValidate
+    {
+        return $this->filterVar;
+    }
+
+    public function setFilterVar(FilterVarValidate $filterVar): FilterVarTester
+    {
+        $this->filterVar = $filterVar;
+        return $this;
+    }
+
+    public function getFilter(): int
+    {
+        return $this->getFilterVar()->getFilter();
+    }
 
     /**
      * addOption
      * @param string $filterVarOption
      */
-    public function addOption(string $filterVarOption, mixed $value): void
+    public function addOption(string $filterVarOption, mixed $value): FilterVarTester
     {
-        $this->optionsArray['options'][$filterVarOption] = $value;
+        $this->filterVar->addOption($filterVarOption, $value);
+        return $this;
     }
 
-    public function addFlag(string $filterFlag): void
+    public function addFlag(int $filterFlag): FilterVarTester
     {
-        $this->optionsArray['flags'][] = $filterFlag;
-    }
-
-    /**
-     * getMsgId
-     * @return string
-     */
-    public function getMsgId(): string
-    {
-        return '';
-    }
-
-    public function getMsgParameters(): array
-    {
-        return [];
+        $this->filterVar->addFlag($filterFlag);
+        return $this;
     }
 
     /**
      * @function testValue
      * @param string $value
-     * @return bool|null
+     * @return bool
      */
-    public function testValue(mixed $value = ''): bool|null
+    public function testValue(mixed $value = ''): bool
     {
-        return ($this->getFilter() ? (false !== filter_var($value, $this->getFilter(), $this->getOptionsArray())) :
-            null);
-    }
-
-    /**
-     * @function getFilter
-     * @return int
-     */
-    public function getFilter(): int
-    {
-        return $this->filter;
-    }
-
-    /**
-     * @function setFilter
-     * @param int $filter
-     */
-    public function setFilter(int $filter): void
-    {
-        $this->filter = $filter;
-    }
-
-    /**
-     * @function getOptionsArray
-     * @return array<string, mixed>
-     */
-    public function getOptionsArray(): array
-    {
-        return $this->optionsArray;
+        return $this->getFilterVar()->validate($value);
     }
 }

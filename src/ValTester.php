@@ -14,13 +14,8 @@ use pvc\interfaces\validator\ValTesterInterface;
  * @template DataType
  * @implements ValTesterInterface<DataType>
  */
-class ValTester implements ValTesterInterface
+abstract class ValTester implements ValTesterInterface
 {
-    /**
-     * @var callable|null
-     */
-    protected $callable;
-
     /**
      * @var string
      */
@@ -30,36 +25,6 @@ class ValTester implements ValTesterInterface
      * @var array<string, mixed>
      */
     protected array $msgParameters = [];
-
-    /**
-     * setCallable
-     * @param callable $callable
-     */
-    public function setCallable(callable $callable): void
-    {
-        $this->callable = $callable;
-    }
-
-    /**
-     * getCallable
-     * @return callable
-     */
-    public function getCallable(): callable
-    {
-        /** @noinspection PhpCSValidationInspection */
-        return ($this->callable ?? function (mixed $value) { return true; });
-    }
-
-    /**
-     * testValue
-     * @param DataType $value
-     * @return bool|null
-     */
-    public function testValue($value): ?bool
-    {
-        $callable = $this->getCallable();
-        return (bool) $callable($value);
-    }
 
     /**
      * getMsgId
@@ -89,6 +54,17 @@ class ValTester implements ValTesterInterface
     }
 
     /**
+     * setMsgParameters
+     * @param array<string, mixed> $params
+     */
+    public function setMsgParameters(array $params): void
+    {
+        foreach ($params as $key => $param) {
+            $this->addMsgParameter($key, $param);
+        }
+    }
+
+    /**
      * addMsgParameter
      * @param string $paramName
      * $paramName looks like it could be typed as array-index, but because it is specifically for pvc messages, it
@@ -98,16 +74,5 @@ class ValTester implements ValTesterInterface
     public function addMsgParameter(string $paramName, mixed $paramValue): void
     {
         $this->msgParameters[$paramName] = $paramValue;
-    }
-
-    /**
-     * setMsgParameters
-     * @param array<string, mixed> $params
-     */
-    public function setMsgParameters(array $params): void
-    {
-        foreach ($params as $key => $param) {
-            $this->addMsgParameter($key, $param);
-        }
     }
 }

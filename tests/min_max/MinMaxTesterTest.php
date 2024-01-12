@@ -8,19 +8,43 @@ declare (strict_types=1);
 
 namespace pvcTests\validator\min_max;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use pvc\validator\err\SetMaxException;
 use pvc\validator\err\SetMinException;
+use pvc\validator\min_max\MinMaxDateTester;
+use pvc\validator\min_max\MinMaxFloatTester;
+use pvc\validator\min_max\MinMaxIntegerTester;
 use pvc\validator\min_max\MinMaxTester;
-use pvcTests\validator\ValTesterMaster;
 
-class MinMaxTesterTest extends ValTesterMaster
+class MinMaxTesterTest extends TestCase
 {
+    protected MinMaxTester|MockObject $tester;
+
     public function setUp(): void
     {
         $this->tester = $this->getMockBuilder(MinMaxTester::class)
                              ->disableOriginalConstructor()
                              ->getMockForAbstractClass();
     }
+
+    /**
+     * testGetMsgParameters
+     * @throws SetMaxException
+     * @throws SetMinException
+     * @covers \pvc\validator\min_max\MinMaxTester::getMsgParameters
+     */
+    public function testGetMsgParameters(): void
+    {
+        $min = 0;
+        $max = 5;
+        $this->tester->setMin($min);
+        $this->tester->setMax($max);
+        $params = $this->tester->getMsgParameters();
+        self::assertEquals($min, $params['min']);
+        self::assertEquals($max, $params['max']);
+    }
+
 
     /**
      * testSetMinWithNull

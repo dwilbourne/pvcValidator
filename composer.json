@@ -25,7 +25,8 @@
 		"pvc/err": "*",
 		"pvc/msg": "*",
 		"pvc/interfaces": "*",
-		"pvc/regex": "*"
+		"pvc/regex": "*",
+		"pvc/filtervar": "*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9",

@@ -7,42 +7,82 @@
 
 namespace pvcTests\validator\filter_var;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use pvc\filtervar\FilterVarValidate;
+use pvc\validator\err\InvalidLabelException;
 use pvc\validator\filter_var\FilterVarTester;
-use pvcTests\validator\ValTesterMaster;
 
 /**
  * Class FilterVarTesterTest
  */
-class FilterVarTesterTest extends ValTesterMaster
+class FilterVarTesterTest extends TestCase
 {
+    protected FilterVarValidate|MockObject $filterVar;
+
+    protected FilterVarTester $tester;
     public function setUp(): void
     {
-        $this->tester = $this->getMockBuilder(FilterVarTester::class)
-                             ->disableOriginalConstructor()
-                             ->getMockForAbstractClass();
+        $this->tester = new FilterVarTester();
+        $this->filterVar = $this->createMock(FilterVarValidate::class);
+        $this->tester->setFilterVar($this->filterVar);
     }
 
     /**
-     * testSetGetFilter
-     * @covers \pvc\validator\filter_var\FilterVarTester::setFilter
-     * @covers \pvc\validator\filter_var\FilterVarTester::getFilter
+     * testGetMsgId
+     * @covers \pvc\validator\filter_var\FilterVarTester::getMsgId()
+     */
+    public function testGetMsgId(): void
+    {
+        self::assertIsString($this->tester->getMsgId());
+        $messages = include(__DIR__ . '\..\..\src\messages\ValidatorMessages.en.php');
+        self::assertTrue(array_key_exists($this->tester->getMsgId(), $messages));
+    }
+
+    /**
+     * testGetMsgParameters
+     * @throws \pvc\validator\err\InvalidLabelException
+     * @covers \pvc\validator\filter_var\FilterVarTester::getMsgParameters()
+     */
+    public function testGetMsgParameters(): void
+    {
+        $label = 'label';
+
+        $this->filterVar->expects($this->once())->method('setLabel')->with($label);
+        $this->filterVar->expects($this->once())->method('getLabel')->willReturn($label);
+        $this->tester->setLabel($label);
+
+        $params = $this->tester->getMsgParameters();
+        foreach ($params as $key => $value) {
+            self::assertIsString($key);
+            self::assertEquals($label, $value);
+        }
+    }
+
+    /**
+     * testSetGetFilterVar
+     * @covers \pvc\validator\filter_var\FilterVarTester::setFilterVar
+     * @covers \pvc\validator\filter_var\FilterVarTester::getFilterVar
+     */
+    public function testSetGetFilterVar(): void
+    {
+        $filterVar = $this->createMock(FilterVarValidate::class);
+        $this->tester->setFilterVar($filterVar);
+        self::assertEquals($filterVar, $this->tester->getFilterVar());
+    }
+
+    /**
+     * testSetFilter
+     * @covers \pvc\validator\filter_var\FilterVarTester::setFilter()
+     * @covers \pvc\validator\filter_var\FilterVarTester::getFilter()
      */
     public function testSetGetFilter(): void
     {
-        $testFilter = FILTER_VALIDATE_URL;
-        $this->tester->setFilter($testFilter);
-        self::assertEquals($testFilter, $this->tester->getFilter());
-    }
-
-    /**
-     * testSetGetOptionsArray
-     * @covers \pvc\validator\filter_var\FilterVarTester::getOptionsArray
-     */
-    public function testSetGetOptionsArray(): void
-    {
-        $array = $this->tester->getOptionsArray();
-        self::assertTrue(isset($array['options']));
-        self::assertTrue(isset($array['flags']));
+        $dummyFilter = 5;
+        $this->filterVar->expects($this->once())->method('setFilter')->with($dummyFilter);
+        $this->filterVar->expects($this->once())->method('getFilter')->willReturn($dummyFilter);
+        $this->tester->setFilter($dummyFilter);
+        self::assertEquals($dummyFilter, $this->tester->getFilter());
     }
 
     /**
@@ -53,10 +93,8 @@ class FilterVarTesterTest extends ValTesterMaster
     {
         $option = 'default';
         $value = 3;
+        $this->filterVar->expects($this->once())->method('addOption')->with($option, $value);
         $this->tester->addOption($option, $value);
-        $optionsArray = $this->tester->getOptionsArray();
-        self::assertTrue(isset($optionsArray['options']['default']));
-        self::assertEquals($value, $optionsArray['options']['default']);
     }
 
     /**
@@ -66,10 +104,8 @@ class FilterVarTesterTest extends ValTesterMaster
     public function testAddFlag(): void
     {
         $flag = FILTER_FLAG_EMAIL_UNICODE;
+        $this->filterVar->expects($this->once())->method('addFlag')->with($flag);
         $this->tester->addFlag($flag);
-        $optionsArray = $this->tester->getOptionsArray();
-        $flags = $optionsArray['flags'];
-        self::assertTrue(in_array($flag, $flags));
     }
 
     /**
@@ -78,24 +114,44 @@ class FilterVarTesterTest extends ValTesterMaster
      */
     public function testValidateSucceeds(): void
     {
-        $testFilter = FILTER_VALIDATE_URL;
-        $this->tester = $this->getMockForAbstractClass(FilterVarTester::class);
-        $this->tester->setFilter($testFilter);
-        $goodUrlString = 'http://www.somehost.com/support';
-        self::assertTrue($this->tester->testValue($goodUrlString));
+        $testValueThatSucceeds = 'foo';
+        $this->filterVar->method('validate')->with($testValueThatSucceeds)->willReturn(true);
+        self::assertTrue($this->tester->testValue($testValueThatSucceeds));
     }
 
     /**
      * testValidateFails
      * @covers \pvc\validator\filter_var\FilterVarTester::testValue
-     *
      */
     public function testValidateFails(): void
     {
-        $testFilter = FILTER_VALIDATE_URL;
-        $this->tester = $this->getMockForAbstractClass(FilterVarTester::class);
-        $this->tester->setFilter($testFilter);
-        $badUrlString = 'notUrl';
-        self::assertFalse($this->tester->testValue($badUrlString));
+        $testValueThatFails = 'foo';
+        $this->filterVar->method('validate')->with($testValueThatFails)->willReturn(false);
+        self::assertFalse($this->tester->testValue($testValueThatFails));
+    }
+
+    /**
+     * testSetLabelThrowsExceptionWithEmptyLabel
+     * @throws InvalidLabelException
+     * @covers \pvc\validator\filter_var\FilterVarTester::setLabel
+     */
+    public function testSetLabelThrowsExceptionWithEmptyLabel(): void
+    {
+        self::expectException(InvalidLabelException::class);
+        $this->tester->setLabel('');
+    }
+
+    /**
+     * testSetGetLabel
+     * @covers \pvc\validator\filter_var\FilterVarTester::setLabel
+     * @covers \pvc\validator\filter_var\FilterVarTester::getLabel
+     */
+    public function testSetGetLabel(): void
+    {
+        $label = 'label';
+        $this->filterVar->expects($this->once())->method('setLabel')->with($label);
+        $this->filterVar->method('getLabel')->willReturn($label);
+        $this->tester->setLabel($label);
+        self::assertEquals($label, $this->tester->getLabel());
     }
 }

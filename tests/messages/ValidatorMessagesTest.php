@@ -13,7 +13,7 @@ class ValidatorMessagesTest extends TestCase
 {
     /**
      * testMessages
-     * @covers pvc\validator\messages\ValidatorMessages.en.php
+     * @covers \pvc\validator\messages\ValidatorMessages.en.php
      */
     public function testMessages(): void
     {

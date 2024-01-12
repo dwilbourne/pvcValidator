@@ -9,7 +9,7 @@ namespace pvc\validator\min_max;
 
 /**
  * Class ValidatorMinMaxInteger
- * @extends MinMaxTester<integer>
+ * @extends MinMaxTester<int>
  */
 class MinMaxIntegerTester extends MinMaxTester
 {
@@ -21,4 +21,14 @@ class MinMaxIntegerTester extends MinMaxTester
     {
         return 'invalid_min_max_integer';
     }
+
+    /**
+     * getLabel
+     * @return string
+     */
+    public function getLabel(): string
+    {
+        return 'integer';
+    }
+
 }

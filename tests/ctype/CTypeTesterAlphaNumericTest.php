@@ -5,21 +5,21 @@
 
 namespace pvcTests\validator\ctype;
 
-use pvc\validator\ctype\ValTesterAscii;
-use pvcTests\validator\ValTesterMaster;
+use pvc\validator\ctype\CTypeTesterAlphaNumeric;
+use pvcTests\validator\ValTesterTest;
 
-class ValTesterAsciiTest extends ValTesterMaster
+class CTypeTesterAlphaNumericTest extends ValTesterTest
 {
     public function setUp(): void
     {
-        $this->tester = new ValTesterAscii();
+        $this->tester = new CTypeTesterAlphaNumeric();
     }
 
     /**
      * @dataProvider dataProvider
      * @param string $string
      * @param bool $expectedResult
-     * @covers       \pvc\validator\ctype\ValTesterAscii::testValue
+     * @covers \pvc\validator\ctype\CTypeTesterAlphaNumeric::testValue
      */
     public function testValidatorSuccess(string $string, bool $expectedResult): void
     {
@@ -43,5 +43,4 @@ class ValTesterAsciiTest extends ValTesterMaster
             'snowman' => [$snowman, false, 'failed snowman test'],
         ];
     }
-
 }

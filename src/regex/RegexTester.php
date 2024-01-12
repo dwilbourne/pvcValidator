@@ -9,18 +9,46 @@ declare(strict_types=1);
 namespace pvc\validator\regex;
 
 use pvc\interfaces\regex\RegexInterface;
-use pvc\interfaces\validator\ValTesterInterface;
+use pvc\validator\err\InvalidLabelException;
+use pvc\validator\ValTester;
 
 /**
  * Class ValidatorRegex
- * @implements ValTesterInterface<string>
+ * @extends ValTester<string>
  */
-class RegexTester implements ValTesterInterface
+class RegexTester extends ValTester
 {
     /**
      * @var RegexInterface
      */
     protected RegexInterface $regex;
+
+    /**
+     * getMsgId
+     * @return string
+     */
+    public function getMsgId(): string
+    {
+        return 'regex_test_failed';
+    }
+
+    /**
+     * getMsgParameters
+     * @return array<string>
+     */
+    public function getMsgParameters(): array
+    {
+        return ['regex_label' => $this->getLabel()];
+    }
+
+    /**
+     * getLabel
+     * @return string
+     */
+    public function getLabel(): string
+    {
+        return $this->getRegex()->getLabel();
+    }
 
     /**
      * @return RegexInterface
@@ -38,24 +66,6 @@ class RegexTester implements ValTesterInterface
     {
         $this->regex = $regex;
         return $this;
-    }
-
-    /**
-     * getMsgId
-     * @return string
-     */
-    public function getMsgId(): string
-    {
-        return 'regex_test_failed';
-    }
-
-    /**
-     * getMsgParameters
-     * @return array<string>
-     */
-    public function getMsgParameters(): array
-    {
-        return ($this->getRegex()->getLabel() ? ['regex_label' => $this->regex->getLabel()] : []);
     }
 
     /**
@@ -83,25 +93,19 @@ class RegexTester implements ValTesterInterface
      */
     public function setLabel(string $label): RegexTester
     {
+        if (empty($label)) {
+            throw new InvalidLabelException();
+        }
         $this->getRegex()->setLabel($label);
         return $this;
     }
 
     /**
-     * getLabel
-     * @return string
-     */
-    public function getLabel(): string
-    {
-        return $this->getRegex()->getLabel();
-    }
-
-    /**
      * validate
      * @param string $value
-     * @return bool|null
+     * @return bool
      */
-    public function testValue(mixed $value): bool|null
+    public function testValue(mixed $value): bool
     {
         return $this->getRegex()->match($value);
     }

@@ -7,16 +7,16 @@ declare(strict_types=1);
 
 namespace pvc\validator\min_max;
 
-use pvc\interfaces\validator\val_tester\ValTesterMinMaxInterface;
+use pvc\interfaces\validator\ValTesterInterface;
 use pvc\validator\err\SetMaxException;
 use pvc\validator\err\SetMinException;
 
 /**
  * Class ValidatorMinMax
  * @template DataType
- * @implements ValTesterMinMaxInterface<DataType>
+ * @implements ValTesterInterface<DataType>
  */
-abstract class MinMaxTester implements ValTesterMinMaxInterface
+abstract class MinMaxTester implements ValTesterInterface
 {
     /**
      * @var DataType
@@ -27,16 +27,6 @@ abstract class MinMaxTester implements ValTesterMinMaxInterface
      * @var DataType
      */
     protected $max;
-
-    /**
-     * getMsgId
-     * wording and formatting of the messages depends on the data type of the value that is being validated
-     * @return string
-     */
-    public function getMsgId(): string
-    {
-        return '';
-    }
 
     /**
      * getMsgParameters
@@ -58,7 +48,7 @@ abstract class MinMaxTester implements ValTesterMinMaxInterface
 
     /**
      * @param DataType $min
-     * @throws \pvc\validator\err\SetMinException
+     * @throws SetMinException
      */
     public function setMin(mixed $min): void
     {
@@ -87,7 +77,7 @@ abstract class MinMaxTester implements ValTesterMinMaxInterface
 
     /**
      * @param DataType $max
-     * @throws \pvc\validator\err\SetMaxException
+     * @throws SetMaxException
      */
     public function setMax($max): void
     {
@@ -116,10 +106,10 @@ abstract class MinMaxTester implements ValTesterMinMaxInterface
     /**
      * validate
      * @param DataType $value
-     * @return bool|null
+     * @return bool
      */
-    public function testValue($value): bool|null
+    public function testValue($value): bool
     {
-        return ($this->getMin() && $this->getMax() ? ($value >= $this->getMin()) && ($value <= $this->getMax()) : null);
+        return ($value >= $this->getMin()) && ($value <= $this->getMax());
     }
 }

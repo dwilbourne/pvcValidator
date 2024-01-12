@@ -22,6 +22,7 @@ class _ValidatorXDataTest extends XDataTestMaster
      * @covers \pvc\validator\err\_ValidatorXData::getXMessageTemplates
      * @covers \pvc\validator\err\SetMaxException
      * @covers \pvc\validator\err\SetMinException
+     * @covers \pvc\validator\err\InvalidLabelException
      */
     public function testValidatorXData(): void
     {

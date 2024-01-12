@@ -21,21 +21,10 @@ use pvc\validator\ValTester;
 class AbstractTesterFactoryTest extends TestCase
 {
     protected AbstractTesterFactory $abstractTesterFactory;
-    protected RegexFactoryInterface|MockObject $regexFactory;
 
     public function setUp(): void
     {
-        $this->regexFactory = $this->createMock(RegexFactoryInterface::class);
-        $this->abstractTesterFactory = new AbstractTesterFactory($this->regexFactory);
-    }
-
-    /**
-     * testConstruct
-     * @covers \pvc\validator\factory\AbstractTesterFactory::__construct
-     */
-    public function testConstruct()
-    {
-        self::assertInstanceOf(AbstractTesterFactory::class, $this->abstractTesterFactory);
+        $this->abstractTesterFactory = new AbstractTesterFactory();
     }
 
     /**
@@ -56,15 +45,5 @@ class AbstractTesterFactoryTest extends TestCase
     {
         $tester = $this->abstractTesterFactory->makeFilterVarTester();
         self::assertInstanceOf(FilterVarTester::class, $tester);
-    }
-
-    /**
-     * testMakeValTester
-     * @covers \pvc\validator\factory\AbstractTesterFactory::makeValTester
-     */
-    public function testMakeValTester(): void
-    {
-        $tester = $this->abstractTesterFactory->makeValTester();
-        self::assertInstanceOf(ValTester::class, $tester);
     }
 }
