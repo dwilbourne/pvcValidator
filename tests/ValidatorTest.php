@@ -73,10 +73,9 @@ class ValidatorTest extends TestCase
     public function testConstruct()
     {
         $this->validator = $this->getMockBuilder(Validator::class)
-                                ->setConstructorArgs([$this->validatorMsg, $this->valTester])
+                                ->setConstructorArgs([$this->validatorMsg])
                                 ->getMockForAbstractClass();
         self::assertEquals($this->validatorMsg, $this->validator->getMsg());
-        self::assertEquals($this->valTester, $this->validator->getValTester());
         self::assertTrue($this->validator->isRequired());
     }
 

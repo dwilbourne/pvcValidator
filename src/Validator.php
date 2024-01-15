@@ -31,17 +31,14 @@ abstract class Validator implements ValidatorInterface
     /**
      * @var bool
      */
-    protected bool $required;
+    protected bool $required = true;
 
     /**
      * @param ValidatorMsg $msg
-     * @param ValTesterInterface<DataType> $valTester
      */
-    public function __construct(ValidatorMsg $msg, ValTesterInterface $valTester)
+    public function __construct(ValidatorMsg $msg)
     {
         $this->setMsg($msg);
-        $this->setValTester($valTester);
-        $this->required = true;
     }
 
     /**
