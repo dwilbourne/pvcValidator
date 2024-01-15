@@ -29,34 +29,12 @@ class FilterVarTesterTest extends TestCase
     }
 
     /**
-     * testGetMsgId
-     * @covers \pvc\validator\filter_var\FilterVarTester::getMsgId()
+     * testConstruct
+     * @covers \pvc\validator\filter_var\FilterVarTester::__construct
      */
-    public function testGetMsgId(): void
+    public function testConstruct(): void
     {
-        self::assertIsString($this->tester->getMsgId());
-        $messages = include(__DIR__ . '\..\..\src\messages\ValidatorMessages.en.php');
-        self::assertTrue(array_key_exists($this->tester->getMsgId(), $messages));
-    }
-
-    /**
-     * testGetMsgParameters
-     * @throws \pvc\validator\err\InvalidLabelException
-     * @covers \pvc\validator\filter_var\FilterVarTester::getMsgParameters()
-     */
-    public function testGetMsgParameters(): void
-    {
-        $label = 'label';
-
-        $this->filterVar->expects($this->once())->method('setLabel')->with($label);
-        $this->filterVar->expects($this->once())->method('getLabel')->willReturn($label);
-        $this->tester->setLabel($label);
-
-        $params = $this->tester->getMsgParameters();
-        foreach ($params as $key => $value) {
-            self::assertIsString($key);
-            self::assertEquals($label, $value);
-        }
+        self::assertInstanceOf(FilterVarTester::class, $this->tester);
     }
 
     /**
@@ -66,9 +44,19 @@ class FilterVarTesterTest extends TestCase
      */
     public function testSetGetFilterVar(): void
     {
+        $testLabel = 'foo';
         $filterVar = $this->createMock(FilterVarValidate::class);
+        /**
+         * getLabel is called the first time when the filter var is set, because the setter also adds a message
+         * parameter and in doing so, it calls getLabel.
+         */
+        $filterVar->expects($this->exactly(2))->method('getLabel')->willReturn($testLabel);
         $this->tester->setFilterVar($filterVar);
         self::assertEquals($filterVar, $this->tester->getFilterVar());
+        /**
+         * and then here is the second call to getlabel
+         */
+        self::assertEquals($testLabel, $this->tester->getLabel());
     }
 
     /**
@@ -84,6 +72,32 @@ class FilterVarTesterTest extends TestCase
         $this->tester->setFilter($dummyFilter);
         self::assertEquals($dummyFilter, $this->tester->getFilter());
     }
+
+    /**
+     * testSetLabelThrowsExceptionWithEmptyLabel
+     * @throws InvalidLabelException
+     * @covers \pvc\validator\filter_var\FilterVarTester::setLabel
+     */
+    public function testSetLabelThrowsExceptionWithEmptyLabel(): void
+    {
+        self::expectException(InvalidLabelException::class);
+        $this->tester->setLabel('');
+    }
+
+    /**
+     * testSetGetLabel
+     * @covers \pvc\validator\filter_var\FilterVarTester::setLabel
+     * @covers \pvc\validator\filter_var\FilterVarTester::getLabel
+     */
+    public function testSetGetLabel(): void
+    {
+        $label = 'label';
+        $this->filterVar->expects($this->once())->method('setLabel')->with($label);
+        $this->filterVar->method('getLabel')->willReturn($label);
+        $this->tester->setLabel($label);
+        self::assertEquals($label, $this->tester->getLabel());
+    }
+
 
     /**
      * testAddOption
@@ -128,30 +142,5 @@ class FilterVarTesterTest extends TestCase
         $testValueThatFails = 'foo';
         $this->filterVar->method('validate')->with($testValueThatFails)->willReturn(false);
         self::assertFalse($this->tester->testValue($testValueThatFails));
-    }
-
-    /**
-     * testSetLabelThrowsExceptionWithEmptyLabel
-     * @throws InvalidLabelException
-     * @covers \pvc\validator\filter_var\FilterVarTester::setLabel
-     */
-    public function testSetLabelThrowsExceptionWithEmptyLabel(): void
-    {
-        self::expectException(InvalidLabelException::class);
-        $this->tester->setLabel('');
-    }
-
-    /**
-     * testSetGetLabel
-     * @covers \pvc\validator\filter_var\FilterVarTester::setLabel
-     * @covers \pvc\validator\filter_var\FilterVarTester::getLabel
-     */
-    public function testSetGetLabel(): void
-    {
-        $label = 'label';
-        $this->filterVar->expects($this->once())->method('setLabel')->with($label);
-        $this->filterVar->method('getLabel')->willReturn($label);
-        $this->tester->setLabel($label);
-        self::assertEquals($label, $this->tester->getLabel());
     }
 }

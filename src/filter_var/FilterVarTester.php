@@ -20,34 +20,20 @@ class FilterVarTester extends ValTester
 
     protected FilterVarValidate $filterVar;
 
-    public function getMsgId(): string
+    public function __construct()
     {
-        return 'filter_var_test_failed';
-    }
-
-    public function getMsgParameters(): array
-    {
-        return ['filter_var_label' => $this->getLabel()];
-    }
-
-    public function getLabel(): string
-    {
-        return $this->filterVar->getLabel();
-    }
-
-    public function setLabel(string $label): FilterVarTester
-    {
-        if (empty($label)) {
-            throw new InvalidLabelException();
-        }
-        $this->filterVar->setLabel($label);
-        return $this;
+        $this->setMsgId('filter_var_test_failed');
     }
 
     public function setFilter(int $filter): FilterVarTester
     {
         $this->getFilterVar()->setFilter($filter);
         return $this;
+    }
+
+    public function getFilter(): int
+    {
+        return $this->getFilterVar()->getFilter();
     }
 
     public function getFilterVar(): FilterVarValidate
@@ -58,12 +44,23 @@ class FilterVarTester extends ValTester
     public function setFilterVar(FilterVarValidate $filterVar): FilterVarTester
     {
         $this->filterVar = $filterVar;
+        $this->setMsgParameters([]);
+        $this->addMsgParameter('filter_var_label', $this->filterVar->getLabel());
         return $this;
     }
 
-    public function getFilter(): int
+    public function setLabel(string $label): FilterVarTester
     {
-        return $this->getFilterVar()->getFilter();
+        if (empty($label)) {
+            throw new InvalidLabelException();
+        }
+        $this->getFilterVar()->setLabel($label);
+        return $this;
+    }
+
+    public function getLabel(): string
+    {
+        return $this->getFilterVar()->getLabel();
     }
 
     /**

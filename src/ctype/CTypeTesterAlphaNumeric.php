@@ -7,17 +7,18 @@ declare(strict_types=1);
 
 namespace pvc\validator\ctype;
 
+use pvc\validator\ValTester;
+
 /**
  * Class ValidatorAlNum
  *
  * Note that ctype_alnum is locale-aware (based on the current locale)
  */
-class CTypeTesterAlphaNumeric extends CTypeTester
+class CTypeTesterAlphaNumeric extends ValTester
 {
     public function __construct()
     {
         $this->setMsgId('not_alnum');
-        $this->setLabel('alphanumeric');
     }
 
     /**

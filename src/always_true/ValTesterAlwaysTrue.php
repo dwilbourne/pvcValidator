@@ -16,21 +16,16 @@ use pvc\validator\ValTester;
  */
 class ValTesterAlwaysTrue extends ValTester
 {
+
+    public function __construct()
+    {
+        /**
+         * this class has no message
+         */
+        $this->setMsgId('null_msg');
+    }
     public function testValue(mixed $value): bool
     {
         return true;
-    }
-
-    public function getLabel(): string
-    {
-        return 'always true';
-    }
-
-    public function getMsgId(): string
-    {
-        /**
-         * msgId can be empty because this class has no messages
-         */
-        return '';
     }
 }

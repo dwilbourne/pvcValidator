@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace pvc\validator\callable;
 
-use pvc\validator\err\InvalidLabelException;
 use pvc\validator\ValTester;
 
 /**
@@ -16,37 +15,10 @@ use pvc\validator\ValTester;
  */
 class CallableTester extends ValTester
 {
-
-    /**
-     * @var string
-     */
-    protected string $label;
-
     /**
      * @var callable|null
      */
     protected $callable;
-
-    /**
-     * getLabel
-     * @return string
-     */
-    public function getLabel(): string
-    {
-        return $this->label;
-    }
-
-    /**
-     * setLabel
-     * @param string $label
-     */
-    public function setLabel(string $label): void
-    {
-        if (empty($label)) {
-            throw new InvalidLabelException();
-        }
-        $this->label = $label;
-    }
 
     /**
      * testValue

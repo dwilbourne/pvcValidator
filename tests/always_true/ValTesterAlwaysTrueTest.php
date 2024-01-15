@@ -16,29 +16,21 @@ use pvc\validator\always_true\ValTesterAlwaysTrue;
  */
 class ValTesterAlwaysTrueTest extends TestCase
 {
+    protected ValTesterAlwaysTrue $tester;
+
     public function setUp(): void
     {
         $this->tester = new ValTesterAlwaysTrue();
     }
 
     /**
-     * testGetMsgId
-     * @covers \pvc\validator\always_true\ValTesterAlwaysTrue::getMsgId
+     * testConstructorSetsMsgId
+     * @covers \pvc\validator\always_true\ValTesterAlwaysTrue::__construct
      */
-    public function testGetMsgId(): void
+    public function testConstructorSetsMsgId(): void
     {
-        $expectedResult = '';
-        self::assertEquals($expectedResult, $this->tester->getMsgId());
-    }
-
-    /**
-     * testGetLabel
-     * @covers \pvc\validator\always_true\ValTesterAlwaysTrue::getLabel
-     */
-    public function testGetLabel(): void
-    {
-        self::assertIsString($this->tester->getLabel());
-        self::assertNotEmpty($this->tester->getLabel());
+        self::assertInstanceOf(ValTesterAlwaysTrue::class, $this->tester);
+        self::assertNotEmpty($this->tester->getMsgId());
     }
 
     /**

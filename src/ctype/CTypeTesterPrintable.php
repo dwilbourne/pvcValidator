@@ -7,19 +7,19 @@ declare(strict_types=1);
 
 namespace pvc\validator\ctype;
 
+use pvc\validator\ValTester;
+
 /**
  * Class CTypeTesterPrintable
  */
-class CTypeTesterPrintable extends CTypeTester
+class CTypeTesterPrintable extends ValTester
 {
-
     /**
      * @throws \pvc\validator\err\InvalidLabelException
      */
     public function __construct()
     {
         $this->setMsgId('not_printable');
-        $this->setLabel('printable characters');
     }
 
     /**

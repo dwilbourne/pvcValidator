@@ -10,7 +10,6 @@ namespace pvcTests\validator\callable;
 use PHPUnit\Framework\TestCase;
 use pvc\testingutils\CallableMock;
 use pvc\validator\callable\CallableTester;
-use pvc\validator\err\InvalidLabelException;
 use pvc\validator\ValTester;
 
 class CallableTesterTest extends TestCase
@@ -55,61 +54,5 @@ class CallableTesterTest extends TestCase
          * including null
          */
         self::assertTrue($this->valTester->testValue(null));
-    }
-
-    /**
-     * testSetGetMsgId
-     * @covers \pvc\validator\ValTester::setMsgId
-     * @covers \pvc\validator\ValTester::getMsgId
-     */
-    public function testSetGetMsgId(): void
-    {
-        $msgId = 'some_string';
-        $this->valTester->setMsgId($msgId);
-        self::assertEquals($msgId, $this->valTester->getMsgId());
-    }
-
-
-    /**
-     * testSetGetAddMsgParameters
-     * @covers \pvc\validator\ValTester::getMsgParameters
-     * @covers \pvc\validator\ValTester::setMsgParameters
-     * @covers \pvc\validator\ValTester::addMsgParameter
-     */
-    public function testSetGetAddMsgParameters(): void
-    {
-        $expectedMsgParams = ['foo' => 9, 'bar' => 'some_string'];
-        $this->valTester->setMsgParameters($expectedMsgParams);
-        self::assertEquals($expectedMsgParams, $this->valTester->getMsgParameters());
-
-        $this->valTester->addMsgParameter('baz', true);
-        $expectedMsgParams['baz'] = true;
-        $this->valTester->addMsgParameter('quux', 'some_other_string');
-        $expectedMsgParams['quux'] = 'some_other_string';
-        self::assertEquals($expectedMsgParams, $this->valTester->getMsgParameters());
-    }
-
-    /**
-     * testSetLabelThrowsExceptionWithEmptyString
-     * @throws InvalidLabelException
-     * @covers \pvc\validator\callable\CallableTester::setLabel
-     */
-    public function testSetLabelThrowsExceptionWithEmptyString(): void
-    {
-        self::expectException(InvalidLabelException::class);
-        $this->valTester->setLabel('');
-    }
-
-    /**
-     * testSetGetLabel
-     * @throws InvalidLabelException
-     * @covers \pvc\validator\callable\CallableTester::setLabel
-     * @covers \pvc\validator\callable\CallableTester::getLabel
-     */
-    public function testSetGetLabel(): void
-    {
-        $label = 'foo';
-        $this->valTester->setLabel($label);
-        self::assertEquals($label, $this->valTester->getLabel());
     }
 }

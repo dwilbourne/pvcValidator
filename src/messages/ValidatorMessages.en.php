@@ -9,6 +9,7 @@ declare (strict_types=1);
 namespace pvc\validator\messages;
 
 return [
+    'null_msg' => '',
     'not_null' => 'value cannot be null',
     'invalid_min_max_date' => "value is not between {'min', date, short} and {'max'}, date, short}",
     'invalid_min_max_time' => "value is not between {'min', time, short} and {'max'}, time, short}",

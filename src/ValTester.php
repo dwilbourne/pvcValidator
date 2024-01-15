@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace pvc\validator;
 
 use pvc\interfaces\validator\ValTesterInterface;
+use pvc\validator\err\InvalidMsgIdException;
 
 /**
  * Class ValTester
@@ -41,6 +42,10 @@ abstract class ValTester implements ValTesterInterface
      */
     public function setMsgId(string $msgId): void
     {
+        $messages = include(__DIR__ . '\messages\ValidatorMessages.en.php');
+        if (!isset($messages[$msgId])) {
+            throw new InvalidMsgIdException($msgId);
+        }
         $this->msgId = $msgId;
     }
 

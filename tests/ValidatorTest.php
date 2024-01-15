@@ -131,12 +131,14 @@ class ValidatorTest extends TestCase
         $testValue = 'bar';
 
         $this->validator = $this->getMockBuilder(Validator::class)
-                                ->setConstructorArgs([$this->validatorMsg, $this->valTester])
+                                ->setConstructorArgs([$this->validatorMsg])
                                 ->getMockForAbstractClass();
-        $this->valTester->method('testValue')->with($testValue)->willReturn(false);
+        $this->validator->setValTester($this->valTester);
 
+        $this->valTester->method('testValue')->with($testValue)->willReturn(false);
         $this->valTester->expects($this->once())->method('getMsgId')->willReturn($testMsgId);
         $this->valTester->expects($this->once())->method('getMsgParameters')->willReturn($testMsgParameters);
+
         $this->validatorMsg->expects($this->once())->method('setContent')->with($testMsgId, $testMsgParameters);
 
         self::assertFalse($this->validator->validate($testValue));
@@ -151,8 +153,9 @@ class ValidatorTest extends TestCase
         $testValue = 'bar';
 
         $this->validator = $this->getMockBuilder(Validator::class)
-                                ->setConstructorArgs([$this->validatorMsg, $this->valTester])
+                                ->setConstructorArgs([$this->validatorMsg])
                                 ->getMockForAbstractClass();
+        $this->validator->setValTester($this->valTester);
         $this->valTester->method('testValue')->with($testValue)->willReturn(true);
         self::assertTrue($this->validator->validate($testValue));
     }

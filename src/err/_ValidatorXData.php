@@ -22,6 +22,7 @@ class _ValidatorXData extends XDataAbstract
             SetMinException::class => 1001,
             SetMaxException::class => 1002,
             InvalidLabelException::class => 1003,
+            InvalidMsgIdException::class => 1004,
         ];
     }
 
@@ -31,6 +32,7 @@ class _ValidatorXData extends XDataAbstract
             SetMinException::class => 'min cannot be null and cannot set min value to be greater than existing max value.',
             SetMaxException::class => 'max cannot be null and cannot set max value to be less than existing min value.',
             InvalidLabelException::class => 'label cannot be an empty string',
+            InvalidMsgIdException::class => 'msgid ${msgId} not found in messages file / array',
         ];
     }
 }

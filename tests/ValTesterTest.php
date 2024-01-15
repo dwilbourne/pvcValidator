@@ -8,6 +8,7 @@ declare (strict_types=1);
 namespace pvcTests\validator;
 
 use PHPUnit\Framework\TestCase;
+use pvc\validator\err\InvalidMsgIdException;
 use pvc\validator\ValTester;
 
 class ValTesterTest extends TestCase
@@ -20,11 +21,23 @@ class ValTesterTest extends TestCase
     }
 
     /**
+     * testSetMsgIdThrowsExceptionWithUnknownMsgId
+     * @throws InvalidMsgIdException
+     * @covers \pvc\validator\ValTester::setMsgId
+     */
+    public function testSetMsgIdThrowsExceptionWithUnknownMsgId(): void
+    {
+        $msgId = 'foo';
+        self::expectException(InvalidMsgIdException::class);
+        $this->tester->setMsgId($msgId);
+    }
+
+    /**
      * testGetMsgId
      */
     public function testSetGetMsgId(): void
     {
-        $msgId = 'foo';
+        $msgId = 'null_msg';
         $this->tester->setMsgId($msgId);
         self::assertEquals($msgId, $this->tester->getMsgId());
     }

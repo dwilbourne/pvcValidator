@@ -7,9 +7,8 @@ declare (strict_types=1);
 
 namespace pvcTests\validator\list_choice;
 
-use pvc\validator\err\InvalidLabelException;
-use pvc\validator\list_choice\ListChoiceValTester;
 use PHPUnit\Framework\TestCase;
+use pvc\validator\list_choice\ListChoiceValTester;
 use stdClass;
 
 class ListChoiceValTesterTest extends TestCase
@@ -26,30 +25,6 @@ class ListChoiceValTesterTest extends TestCase
         $this->testClass = new StdClass();
         $this->choices = ['foo', 'bar', 5, $this->testClass];
         $this->tester->setChoices($this->choices);
-    }
-
-    /**
-     * testSetLabelThrowsExceptionWithEmptyLabel
-     * @throws InvalidLabelException
-     * @covers \pvc\validator\list_choice\ListChoiceValTester::setLabel
-     */
-    public function testSetLabelThrowsExceptionWithEmptyLabel(): void
-    {
-        self::expectException(InvalidLabelException::class);
-        $this->tester->setLabel('');
-    }
-
-    /**
-     * testSetGetLabel
-     * @throws \pvc\validator\err\InvalidLabelException
-     * @covers \pvc\validator\list_choice\ListChoiceValTester::setLabel
-     * @covers \pvc\validator\list_choice\ListChoiceValTester::getLabel
-     */
-    public function testSetGetLabel(): void
-    {
-        $testLabel = 'foo';
-        $this->tester->setLabel($testLabel);
-        self::assertEquals($testLabel, $this->tester->getLabel());
     }
 
     /**
