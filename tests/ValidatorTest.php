@@ -10,22 +10,18 @@ namespace pvcTests\validator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use pvc\interfaces\msg\MsgInterface;
-use pvc\interfaces\validator\ValTesterInterface;
-use pvc\validator\messages\ValidatorMsg;
 use pvc\validator\Validator;
 
 class ValidatorTest extends TestCase
 {
-    protected MsgInterface|MockObject $validatorMsg;
-
-    protected ValTesterInterface|MockObject $valTester;
+    protected MsgInterface|MockObject $msg;
 
     protected Validator $validator;
 
     public function setUp(): void
     {
-        $this->validatorMsg = $this->createMock(ValidatorMsg::class);
-        $this->valTester = $this->createMock(ValTesterInterface::class);
+        $this->msg = $this->createMock(MsgInterface::class);
+
         $this->validator = $this->getMockBuilder(Validator::class)
                                 ->disableOriginalConstructor()
                                 ->getMockForAbstractClass();
@@ -38,19 +34,8 @@ class ValidatorTest extends TestCase
      */
     public function testSetGetMsg()
     {
-        $this->validator->setMsg($this->validatorMsg);
-        self::assertEquals($this->validatorMsg, $this->validator->getMsg());
-    }
-
-    /**
-     * testSetGetValTester
-     * @covers \pvc\validator\Validator::setValTester
-     * @covers \pvc\validator\Validator::getValTester
-     */
-    public function testSetGetValTester()
-    {
-        $this->validator->setValTester($this->valTester);
-        self::assertEquals($this->valTester, $this->validator->getValTester());
+        $this->validator->setMsg($this->msg);
+        self::assertEquals($this->msg, $this->validator->getMsg());
     }
 
     /**
@@ -73,9 +58,9 @@ class ValidatorTest extends TestCase
     public function testConstruct()
     {
         $this->validator = $this->getMockBuilder(Validator::class)
-                                ->setConstructorArgs([$this->validatorMsg])
+                                ->setConstructorArgs([$this->msg])
                                 ->getMockForAbstractClass();
-        self::assertEquals($this->validatorMsg, $this->validator->getMsg());
+        self::assertEquals($this->msg, $this->validator->getMsg());
         self::assertTrue($this->validator->isRequired());
     }
 
@@ -86,9 +71,9 @@ class ValidatorTest extends TestCase
     public function testValidateClearsMessageEachTimeItRuns()
     {
         $this->validator = $this->getMockBuilder(Validator::class)
-                                ->setConstructorArgs([$this->validatorMsg, $this->valTester])
+                                ->setConstructorArgs([$this->msg])
                                 ->getMockForAbstractClass();
-        $this->validatorMsg->expects($this->once())->method('clearContent');
+        $this->msg->expects($this->once())->method('clearContent');
         $this->validator->setRequired(false);
         $this->validator->validate(null);
     }
@@ -100,7 +85,7 @@ class ValidatorTest extends TestCase
     public function testValidateReturnsTrueWhenRequiredIsFalseAndNullIsTested(): void
     {
         $this->validator = $this->getMockBuilder(Validator::class)
-                                ->setConstructorArgs([$this->validatorMsg, $this->valTester])
+                                ->setConstructorArgs([$this->msg])
                                 ->getMockForAbstractClass();
         $this->validator->setRequired(false);
         self::assertTrue($this->validator->validate(null));
@@ -113,10 +98,11 @@ class ValidatorTest extends TestCase
     public function testValidateReturnsFalseAndMsgIsSetWhenRequiredIsTrueAndNullIsTested(): void
     {
         $this->validator = $this->getMockBuilder(Validator::class)
-                                ->setConstructorArgs([$this->validatorMsg, $this->valTester])
+                                ->setConstructorArgs([$this->msg])
                                 ->getMockForAbstractClass();
-        $this->validatorMsg->expects($this->once())->method('setContent');
+        $this->msg->expects($this->once())->method('setContent');
         $this->validator->setRequired(true);
+        $this->validator->method('testValue')->willReturn(false);
         self::assertFalse($this->validator->validate(null));
     }
 
@@ -126,21 +112,12 @@ class ValidatorTest extends TestCase
      */
     public function testValidateReturnsFalseAndSetsMsgIfValTesterFails(): void
     {
-        $testMsgId = 'foo';
-        $testMsgParameters = [];
-        $testValue = 'bar';
-
         $this->validator = $this->getMockBuilder(Validator::class)
-                                ->setConstructorArgs([$this->validatorMsg])
+                                ->setConstructorArgs([$this->msg])
                                 ->getMockForAbstractClass();
-        $this->validator->setValTester($this->valTester);
-
-        $this->valTester->method('testValue')->with($testValue)->willReturn(false);
-        $this->valTester->expects($this->once())->method('getMsgId')->willReturn($testMsgId);
-        $this->valTester->expects($this->once())->method('getMsgParameters')->willReturn($testMsgParameters);
-
-        $this->validatorMsg->expects($this->once())->method('setContent')->with($testMsgId, $testMsgParameters);
-
+        $this->validator->method('testValue')->willReturn(false);
+        $this->validator->expects($this->once())->method('setMsgContent');
+        $testValue = 'foo';
         self::assertFalse($this->validator->validate($testValue));
     }
 
@@ -153,10 +130,9 @@ class ValidatorTest extends TestCase
         $testValue = 'bar';
 
         $this->validator = $this->getMockBuilder(Validator::class)
-                                ->setConstructorArgs([$this->validatorMsg])
+                                ->setConstructorArgs([$this->msg])
                                 ->getMockForAbstractClass();
-        $this->validator->setValTester($this->valTester);
-        $this->valTester->method('testValue')->with($testValue)->willReturn(true);
+        $this->validator->method('testValue')->with($testValue)->willReturn(true);
         self::assertTrue($this->validator->validate($testValue));
     }
 }

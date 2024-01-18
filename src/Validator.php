@@ -7,9 +7,8 @@ declare(strict_types=1);
 
 namespace pvc\validator;
 
+use pvc\interfaces\msg\MsgInterface;
 use pvc\interfaces\validator\ValidatorInterface;
-use pvc\interfaces\validator\ValTesterInterface;
-use pvc\validator\messages\ValidatorMsg;
 
 /**
  * Class ValidatorAbstract
@@ -19,14 +18,9 @@ use pvc\validator\messages\ValidatorMsg;
 abstract class Validator implements ValidatorInterface
 {
     /**
-     * @var ValidatorMsg
+     * @var MsgInterface
      */
-    protected ValidatorMsg $msg;
-
-    /**
-     * @var ValTesterInterface<DataType>
-     */
-    protected ValTesterInterface $valTester;
+    protected MsgInterface $msg;
 
     /**
      * @var bool
@@ -34,29 +28,11 @@ abstract class Validator implements ValidatorInterface
     protected bool $required = true;
 
     /**
-     * @param ValidatorMsg $msg
+     * @param MsgInterface $msg
      */
-    public function __construct(ValidatorMsg $msg)
+    public function __construct(MsgInterface $msg)
     {
         $this->setMsg($msg);
-    }
-
-    /**
-     * getValTester
-     * @return ValTesterInterface<DataType>
-     */
-    public function getValTester(): ValTesterInterface
-    {
-        return $this->valTester;
-    }
-
-    /**
-     * setValTester
-     * @param ValTesterInterface<DataType> $valTester
-     */
-    public function setValTester(ValTesterInterface $valTester): void
-    {
-        $this->valTester = $valTester;
     }
 
     /**
@@ -83,15 +59,18 @@ abstract class Validator implements ValidatorInterface
          * to false) - must explicitly be null.
          */
         if ($this->isRequired() && is_null($data)) {
-            $this->getMsg()->setContent('not_null');
+            $msgId = 'not_null';
+            $parameters = null;
+            $domain = 'Validator';
+            $this->getMsg()->setContent($msgId, $parameters, $domain);
             return false;
         }
 
         /**
          * test the value
          */
-        if (!$this->valTester->testValue($data)) {
-            $this->getMsg()->setContent($this->valTester->getMsgId(), $this->valTester->getMsgParameters());
+        if (!$this->testValue($data)) {
+            $this->setMsgContent();
             return false;
         }
         return true;
@@ -99,18 +78,18 @@ abstract class Validator implements ValidatorInterface
 
     /**
      * getMsg
-     * @return ValidatorMsg
+     * @return MsgInterface
      */
-    public function getMsg(): ValidatorMsg
+    public function getMsg(): MsgInterface
     {
         return $this->msg;
     }
 
     /**
      * setMsg
-     * @param ValidatorMsg $msg
+     * @param MsgInterface $msg
      */
-    public function setMsg(ValidatorMsg $msg): void
+    public function setMsg(MsgInterface $msg): void
     {
         $this->msg = $msg;
     }
@@ -130,4 +109,16 @@ abstract class Validator implements ValidatorInterface
     {
         $this->required = $required;
     }
+
+    /**
+     * setMsgContent
+     */
+    abstract protected function setMsgContent(): void;
+
+    /**
+     * testValue
+     * @param $data<DataType>
+     * @return bool
+     */
+    abstract protected function testValue(mixed $data): bool;
 }
