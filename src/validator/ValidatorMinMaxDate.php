@@ -59,7 +59,7 @@ class ValidatorMinMaxDate extends Validator
         $msgId = 'invalid_min_max_date';
         $msgParameters = ['min' => $this->valTester->getMin(), 'max' => $this->valTester->getMax()];
         $domain = 'Validator';
-        $this->getMsg()->setContent($msgId, $msgParameters, $domain);
+        $this->getMsg()->setContent($domain, $msgId, $msgParameters);
     }
 
     /**

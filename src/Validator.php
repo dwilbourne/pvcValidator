@@ -60,9 +60,9 @@ abstract class Validator implements ValidatorInterface
          */
         if ($this->isRequired() && is_null($data)) {
             $msgId = 'not_null';
-            $parameters = null;
+            $parameters = [];
             $domain = 'Validator';
-            $this->getMsg()->setContent($msgId, $parameters, $domain);
+            $this->getMsg()->setContent($domain, $msgId, $parameters);
             return false;
         }
 

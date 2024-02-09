@@ -58,7 +58,7 @@ class ValidatorRegex extends Validator
         $msgId = 'regex_test_failed';
         $msgParameters = ['regex_label' => $this->regexTester->getLabel()];
         $domain = 'Validator';
-        $this->getMsg()->setContent($msgId, $msgParameters, $domain);
+        $this->getMsg()->setContent($domain, $msgId, $msgParameters);
     }
 
     /**

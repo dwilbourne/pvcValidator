@@ -58,7 +58,7 @@ class ValidatorMinMaxFloat extends Validator
         $msgId = 'invalid_min_max_float';
         $msgParameters = ['min' => $this->valTester->getMin(), 'max' => $this->valTester->getMax()];
         $domain = 'Validator';
-        $this->getMsg()->setContent($msgId, $msgParameters, $domain);
+        $this->getMsg()->setContent($domain, $msgId, $msgParameters);
     }
 
     /**
