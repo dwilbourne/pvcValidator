@@ -11,7 +11,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use pvc\interfaces\regex\RegexInterface;
 use pvc\interfaces\validator\ValTesterInterface;
-use pvc\regex\Regex;
 use pvc\validator\err\InvalidLabelException;
 use pvc\validator\val_tester\regex\RegexTester;
 
@@ -116,7 +115,7 @@ class RegexTesterTest extends TestCase
     {
         $pattern = '/foo/';
         $label = 'label';
-        $regex = $this->createMock(Regex::class);
+        $regex = $this->createMock(RegexInterface::class);
         $regex->expects($this->once())->method('setLabel')->with($label);
         $regex->method('getLabel')->willReturn($label);
         $regex->expects($this->once())->method('setPattern')->with($pattern);

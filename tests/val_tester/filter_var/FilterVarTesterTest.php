@@ -9,7 +9,7 @@ namespace pvcTests\validator\val_tester\filter_var;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use pvc\filtervar\FilterVarValidate;
+use pvc\interfaces\filtervar\FilterVarValidateInterface;
 use pvc\validator\err\InvalidLabelException;
 use pvc\validator\val_tester\filter_var\FilterVarTester;
 
@@ -18,12 +18,12 @@ use pvc\validator\val_tester\filter_var\FilterVarTester;
  */
 class FilterVarTesterTest extends TestCase
 {
-    protected FilterVarValidate|MockObject $filterVar;
+    protected FilterVarValidateInterface|MockObject $filterVar;
 
     protected FilterVarTester $tester;
     public function setUp(): void
     {
-        $this->filterVar = $this->createMock(FilterVarValidate::class);
+        $this->filterVar = $this->createMock(FilterVarValidateInterface::class);
         $this->tester = new FilterVarTester($this->filterVar);
     }
 
@@ -43,7 +43,7 @@ class FilterVarTesterTest extends TestCase
      */
     public function testSetGetFilterVar(): void
     {
-        $filterVar = $this->createMock(FilterVarValidate::class);
+        $filterVar = $this->createMock(FilterVarValidateInterface::class);
         $this->tester->setFilterVar($filterVar);
         self::assertEquals($filterVar, $this->tester->getFilterVar());
     }
