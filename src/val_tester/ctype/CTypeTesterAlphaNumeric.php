@@ -15,7 +15,7 @@ use pvc\interfaces\validator\ValTesterInterface;
  *
  * Note that ctype_alnum is locale-aware (based on the current locale)
  */
-class CTypeTesterAlphaNumeric implements ValTesterInterface
+class CTypeTesterAlphaNumeric extends CTypeTester
 {
     /**
      * testValue

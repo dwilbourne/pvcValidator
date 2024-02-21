@@ -13,7 +13,7 @@ use pvc\interfaces\validator\ValTesterInterface;
  * Class CTypeTesterPrintable
  * @implements ValTesterInterface<string>
  */
-class CTypeTesterPrintable implements ValTesterInterface
+class CTypeTesterPrintable extends CTypeTester
 {
     /**
      * testValue
