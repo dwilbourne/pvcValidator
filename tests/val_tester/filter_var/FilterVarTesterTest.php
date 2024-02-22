@@ -24,16 +24,8 @@ class FilterVarTesterTest extends TestCase
     public function setUp(): void
     {
         $this->filterVar = $this->createMock(FilterVarValidateInterface::class);
-        $this->tester = new FilterVarTester($this->filterVar);
-    }
-
-    /**
-     * testConstruct
-     * @covers \pvc\validator\val_tester\filter_var\FilterVarTester::__construct
-     */
-    public function testConstruct(): void
-    {
-        self::assertInstanceOf(FilterVarTester::class, $this->tester);
+        $this->tester = new FilterVarTester();
+        $this->tester->setFilterVar($this->filterVar);
     }
 
     /**

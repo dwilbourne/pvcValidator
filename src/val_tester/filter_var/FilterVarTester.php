@@ -23,14 +23,6 @@ class FilterVarTester implements ValTesterInterface
     protected FilterVarValidateInterface $filterVar;
 
     /**
-     * @param FilterVarValidateInterface $filterVar
-     */
-    public function __construct(FilterVarValidateInterface $filterVar)
-    {
-        $this->filterVar = $filterVar;
-    }
-
-    /**
      * getFilterVar
      * @return FilterVarValidateInterface
      */
