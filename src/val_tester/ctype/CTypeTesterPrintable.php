@@ -7,11 +7,8 @@ declare(strict_types=1);
 
 namespace pvc\validator\val_tester\ctype;
 
-use pvc\interfaces\validator\ValTesterInterface;
-
 /**
  * Class CTypeTesterPrintable
- * @implements ValTesterInterface<string>
  */
 class CTypeTesterPrintable extends CTypeTester
 {
