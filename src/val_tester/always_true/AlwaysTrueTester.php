@@ -8,13 +8,12 @@ declare(strict_types=1);
 
 namespace pvc\validator\val_tester\always_true;
 
-use pvc\interfaces\validator\ValTesterInterface;
+use pvc\interfaces\validator\valtesters\ValTesterAlwaysTrueInterface;
 
 /**
  * Class ValTesterAlwaysTrue
- * @implements ValTesterInterface<mixed>
  */
-class ValTesterAlwaysTrue implements ValTesterInterface
+class AlwaysTrueTester implements ValTesterAlwaysTrueInterface
 {
     /**
      * testValue

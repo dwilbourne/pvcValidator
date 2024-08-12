@@ -16,6 +16,15 @@ class CTypeTesterAlphaNumericTest extends TestCase
     }
 
     /**
+     * testConstruct
+     * @covers \pvc\validator\val_tester\ctype\CTypeTesterAlphaNumeric::__construct
+     */
+    public function testConstruct(): void
+    {
+        self::assertEquals('ctype_alnum', $this->tester->getCallable());
+    }
+
+    /**
      * @dataProvider dataProvider
      * @param string $string
      * @param bool $expectedResult

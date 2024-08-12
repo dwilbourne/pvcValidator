@@ -23,6 +23,11 @@ class RegexTester implements ValTesterInterface
      */
     protected RegexInterface $regex;
 
+    public function __construct(RegexInterface $regex)
+    {
+        $this->setRegex($regex);
+    }
+
     /**
      * getLabel
      * @return string

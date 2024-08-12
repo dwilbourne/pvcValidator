@@ -12,11 +12,19 @@ use pvc\interfaces\validator\ValTesterInterface;
 use pvc\validator\err\InvalidLabelException;
 
 /**
- * Class ValidatorText
+ * Class FilterVarTester
  * @implements  ValTesterInterface<string>
+ * filter_var is a php verb that can be used either to validate a string or to sanitize a string.  This object
+ * wants to use filter_var for validation of course.  So in essence, this class wraps the FilterVarValidate class
+ * and provides convenience methods to set flags, options, etc.
  */
 class FilterVarTester implements ValTesterInterface
 {
+    public function __construct(FilterVarValidateInterface $filterVarValidate)
+    {
+        $this->setFilterVar($filterVarValidate);
+    }
+
     /**
      * @var FilterVarValidateInterface
      */

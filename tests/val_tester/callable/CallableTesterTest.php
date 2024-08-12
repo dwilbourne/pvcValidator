@@ -45,9 +45,12 @@ class CallableTesterTest extends TestCase
     public function testTestValueWithCallableThatReturnsTrue(): void
     {
         $value = 'any_random_value';
+        /*
         $callback = function () {
             return true;
         };
+        */
+        $callback = 'ctype_alnum';
         $this->callableMock->setCallable($callback);
         self::assertTrue($this->valTester->testValue($value));
         /**

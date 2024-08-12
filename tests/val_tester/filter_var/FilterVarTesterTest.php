@@ -24,17 +24,19 @@ class FilterVarTesterTest extends TestCase
     public function setUp(): void
     {
         $this->filterVar = $this->createMock(FilterVarValidateInterface::class);
-        $this->tester = new FilterVarTester();
+        $this->tester = new FilterVarTester($this->filterVar);
         $this->tester->setFilterVar($this->filterVar);
     }
 
     /**
      * testSetGetFilterVar
+     * @covers \pvc\validator\val_tester\filter_var\FilterVarTester::__construct
      * @covers \pvc\validator\val_tester\filter_var\FilterVarTester::setFilterVar
      * @covers \pvc\validator\val_tester\filter_var\FilterVarTester::getFilterVar
      */
     public function testSetGetFilterVar(): void
     {
+        self::assertInstanceOf(FilterVarValidateInterface::class, $this->tester->getFilterVar());
         $filterVar = $this->createMock(FilterVarValidateInterface::class);
         $this->tester->setFilterVar($filterVar);
         self::assertEquals($filterVar, $this->tester->getFilterVar());

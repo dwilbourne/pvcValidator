@@ -20,6 +20,15 @@ class CTypeTesterPrintableTest extends TestCase
     }
 
     /**
+     * testConstruct
+     * @covers \pvc\validator\val_tester\ctype\CTypeTesterPrintable::__construct
+     */
+    public function testConstruct(): void
+    {
+        self::assertEquals('ctype_print', $this->tester->getCallable());
+    }
+
+    /**
      * @dataProvider dataProvider
      * @param string $string
      * @param bool $expectedResult

@@ -27,17 +27,19 @@ class RegexTesterTest extends TestCase
     public function setUp(): void
     {
         $this->regex = $this->createMock(RegexInterface::class);
-        $this->tester = new RegexTester();
+        $this->tester = new RegexTester($this->regex);
         $this->tester->setRegex($this->regex);
     }
 
     /**
      * testSetGetRegex
+     * @covers \pvc\validator\val_tester\regex\RegexTester::__construct
      * @covers \pvc\validator\val_tester\regex\RegexTester::setRegex
      * @covers \pvc\validator\val_tester\regex\RegexTester::getRegex
      */
     public function testSetGetRegex(): void
     {
+        self::assertInstanceOf(RegexInterface::class, $this->tester->getRegex());
         $regex = $this->createMock(RegexInterface::class);
         $this->tester->setRegex($regex);
         self::assertEquals($regex, $this->tester->getRegex());

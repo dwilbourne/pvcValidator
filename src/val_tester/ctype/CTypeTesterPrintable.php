@@ -7,18 +7,16 @@ declare(strict_types=1);
 
 namespace pvc\validator\val_tester\ctype;
 
+use pvc\validator\val_tester\callable\CallableTester;
+
 /**
  * Class CTypeTesterPrintable
+ * @extends CallableTester
  */
-class CTypeTesterPrintable extends CTypeTester
+class CTypeTesterPrintable extends CallableTester
 {
-    /**
-     * testValue
-     * @param mixed $value
-     * @return bool
-     */
-    public function testValue(mixed $value): bool
+    public function __construct()
     {
-        return ctype_print($value);
+        $this->setCallable('ctype_print');
     }
 }

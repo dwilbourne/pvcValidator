@@ -13,7 +13,7 @@ use pvc\interfaces\validator\ValTesterInterface;
  * Class ListChoiceValTester
  * @implements ValTesterInterface<mixed>
  */
-class ListChoiceValTester implements ValTesterInterface
+class ListChoiceTester implements ValTesterInterface
 {
     /**
      * @var array<mixed>

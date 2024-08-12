@@ -9,23 +9,23 @@ declare(strict_types=1);
 namespace pvcTests\validator\val_tester\always_true;
 
 use PHPUnit\Framework\TestCase;
-use pvc\validator\val_tester\always_true\ValTesterAlwaysTrue;
+use pvc\validator\val_tester\always_true\AlwaysTrueTester;
 
 /**
  * Class ValidatorAlwaysTrueTest
  */
-class ValTesterAlwaysTrueTest extends TestCase
+class AlwaysTrueValTesterTest extends TestCase
 {
-    protected \pvc\validator\val_tester\always_true\ValTesterAlwaysTrue $tester;
+    protected AlwaysTrueTester $tester;
 
     public function setUp(): void
     {
-        $this->tester = new \pvc\validator\val_tester\always_true\ValTesterAlwaysTrue();
+        $this->tester = new AlwaysTrueTester();
     }
 
     /**
      * testValidate
-     * @covers \pvc\validator\val_tester\always_true\ValTesterAlwaysTrue::testValue
+     * @covers \pvc\validator\val_tester\always_true\AlwaysTruetester::testValue
      */
     public function testValidate(): void
     {
