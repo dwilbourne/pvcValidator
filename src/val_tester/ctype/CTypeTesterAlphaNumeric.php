@@ -11,7 +11,7 @@ use pvc\validator\val_tester\callable\CallableTester;
 
 /**
  * Class CTypeTesterAlphaNumeric
- * @extends CallableTester
+ * @extends CallableTester<string>
  *
  * Note that ctype_alnum is locale-aware (based on the current locale)
  */

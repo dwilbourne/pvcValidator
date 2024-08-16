@@ -11,7 +11,7 @@ use pvc\validator\val_tester\callable\CallableTester;
 
 /**
  * Class CTypeTesterPrintable
- * @extends CallableTester
+ * @extends CallableTester<string>
  */
 class CTypeTesterPrintable extends CallableTester
 {

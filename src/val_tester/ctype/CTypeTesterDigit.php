@@ -8,14 +8,13 @@ declare(strict_types=1);
 
 namespace pvc\validator\val_tester\ctype;
 
-use pvc\interfaces\validator\valtesters\ValTesterCallableInterface;
 use pvc\validator\val_tester\callable\CallableTester;
 
 /**
  * Class CTypeTesterDigit
  * @extends CallableTester<string>
  */
-class CTypeTesterDigit extends CallableTester implements ValTesterCallableInterface
+class CTypeTesterDigit extends CallableTester
 {
     public function __construct()
     {

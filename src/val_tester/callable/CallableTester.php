@@ -3,17 +3,19 @@
 /**
  * @author: Doug Wilbourne (dougwilbourne@gmail.com)
  */
+
 declare(strict_types=1);
 
 namespace pvc\validator\val_tester\callable;
 
-use pvc\interfaces\validator\ValTesterInterface;
+use pvc\interfaces\validator\valtesters\ValTesterCallableInterface;
 
 /**
  * Class CallableTester
- * @implements  ValTesterInterface<mixed>
+ * @template DateType
+ * @implements  ValTesterCallableInterface<DateType>
  */
-class CallableTester implements ValTesterInterface
+class CallableTester implements ValTesterCallableInterface
 {
     /**
      * @var callable|null
