@@ -8,12 +8,12 @@ declare (strict_types=1);
 namespace pvcTests\validator\val_tester\list_choice;
 
 use PHPUnit\Framework\TestCase;
-use pvc\validator\val_tester\list_choice\ListChoiceValTester;
+use pvc\validator\val_tester\list_choice\ListChoiceTester;
 use stdClass;
 
-class ListChoiceValTesterTest extends TestCase
+class ListChoiceTesterTest extends TestCase
 {
-    protected ListChoiceValTester $tester;
+    protected ListChoiceTester $tester;
 
     protected array $choices;
 
@@ -21,7 +21,7 @@ class ListChoiceValTesterTest extends TestCase
 
     public function setUp(): void
     {
-        $this->tester = new ListChoiceValTester();
+        $this->tester = new ListChoiceTester();
         $this->testClass = new StdClass();
         $this->choices = ['foo', 'bar', 5, $this->testClass];
         $this->tester->setChoices($this->choices);
@@ -29,8 +29,8 @@ class ListChoiceValTesterTest extends TestCase
 
     /**
      * testSetGetChoices
-     * @covers \pvc\validator\val_tester\list_choice\ListChoiceValTester::setChoices
-     * @covers \pvc\validator\val_tester\list_choice\ListChoiceValTester::getChoices
+     * @covers \pvc\validator\val_tester\list_choice\ListChoiceTester::setChoices
+     * @covers \pvc\validator\val_tester\list_choice\ListChoiceTester::getChoices
      */
     public function testSetGetChoices(): void
     {
@@ -39,7 +39,7 @@ class ListChoiceValTesterTest extends TestCase
 
     /**
      * testTestValueReturnsFalseWithInvalidChoice
-     * @covers \pvc\validator\val_tester\list_choice\ListChoiceValTester::testValue
+     * @covers \pvc\validator\val_tester\list_choice\ListChoiceTester::testValue
      */
     public function testTestValueReturnsFalseWithInvalidChoice(): void
     {
@@ -53,7 +53,7 @@ class ListChoiceValTesterTest extends TestCase
 
     /**
      * testTestValueReturnsTrueWithValidChoice
-     * @covers \pvc\validator\val_tester\list_choice\ListChoiceValTester::testValue
+     * @covers \pvc\validator\val_tester\list_choice\ListChoiceTester::testValue
      */
     public function testTestValueReturnsTrueWithValidChoice(): void
     {
