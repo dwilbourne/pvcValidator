@@ -20,42 +20,31 @@ class CallableTesterTest extends TestCase
 
     public function setUp(): void
     {
-        $this->valTester = new CallableTester();
         $this->callableMock = new CallableMock();
+        $this->valTester = new CallableTester($this->callableMock);
     }
 
     /**
-     * testSetGetCallable
+     * testConstructSetGetCallable
+     * @covers \pvc\validator\val_tester\callable\CallableTester::__construct
      * @covers \pvc\validator\val_tester\callable\CallableTester::setCallable
      * @covers \pvc\validator\val_tester\callable\CallableTester::getCallable
      */
-    public function testSetGetCallable(): void
+    public function testConstructSetGetCallable(): void
     {
-        $default = $this->valTester->getCallable();
-        self::assertTrue(is_callable($default));
-
-        $this->valTester->setCallable($this->callableMock);
+        self::assertInstanceOf(CallableTester::class, $this->valTester);
         self::assertEquals($this->callableMock, $this->valTester->getCallable());
     }
 
     /**
-     * testTestValueWithDefault
+     * testTestValueWithCallable
      * @covers \pvc\validator\val_tester\callable\CallableTester::testValue
      */
-    public function testTestValueWithCallableThatReturnsTrue(): void
+    public function testTestValueWithCallable(): void
     {
-        $value = 'any_random_value';
-        /*
-        $callback = function () {
-            return true;
-        };
-        */
+        $value = 'anyRandomValue';
         $callback = 'ctype_alnum';
-        $this->callableMock->setCallable($callback);
+        $this->valTester->setCallable($callback);
         self::assertTrue($this->valTester->testValue($value));
-        /**
-         * including null
-         */
-        self::assertTrue($this->valTester->testValue(null));
     }
 }

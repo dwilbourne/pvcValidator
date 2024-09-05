@@ -22,17 +22,17 @@ class ParserTesterTest extends TestCase
     public function setUp(): void
     {
         $this->parser = $this->createStub(ParserInterface::class);
-        $this->tester = new ParserTester();
+        $this->tester = new ParserTester($this->parser);
     }
 
     /**
      * testSetGetParser
+     * @covers \pvc\validator\val_tester\parser\ParserTester::__construct
      * @covers \pvc\validator\val_tester\parser\ParserTester::setParser
      * @covers \pvc\validator\val_tester\parser\ParserTester::getParser
      */
-    public function testSetGetParser(): void
+    public function testConstructorSetGetParser(): void
     {
-        $this->tester->setParser($this->parser);
         self::assertEquals($this->parser, $this->tester->getParser());
     }
 

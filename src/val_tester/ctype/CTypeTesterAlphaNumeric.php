@@ -19,6 +19,6 @@ class CTypeTesterAlphaNumeric extends CallableTester
 {
     public function __construct()
     {
-        $this->setCallable('ctype_alnum');
+        parent::__construct('ctype_alnum');
     }
 }

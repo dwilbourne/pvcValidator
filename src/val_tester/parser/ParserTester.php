@@ -20,6 +20,11 @@ class ParserTester implements ValTesterParserInterface
      */
     protected ParserInterface $parser;
 
+    public function __construct(ParserInterface $parser)
+    {
+        $this->setParser($parser);
+    }
+
     /**
      * testValue
      * @param string $value

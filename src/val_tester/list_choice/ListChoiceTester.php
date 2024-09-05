@@ -18,7 +18,12 @@ class ListChoiceTester implements ValTesterInterface
     /**
      * @var array<mixed>
      */
-    protected $choices = [];
+    protected array $choices;
+
+    public function __construct(array $choices)
+    {
+        $this->setChoices($choices);
+    }
 
     /**
      * setChoices

@@ -28,12 +28,17 @@ abstract class MinMaxTester implements ValTesterInterface
      */
     protected $max;
 
+    public function __construct(mixed $min, mixed $max)
+    {
+        $this->setMinMax($min, $max);
+    }
+
     /**
      * @return DataType|null
      */
     public function getMin(): mixed
     {
-        return $this->min ?? null;
+        return $this->min;
     }
 
     /**
@@ -62,7 +67,7 @@ abstract class MinMaxTester implements ValTesterInterface
      */
     public function getMax(): mixed
     {
-        return $this->max ?? null;
+        return $this->max;
     }
 
     /**

@@ -18,6 +18,6 @@ class CTypeTesterDigit extends CallableTester
 {
     public function __construct()
     {
-        $this->setCallable('ctype_digit');
+        parent::__construct('ctype_digit');
     }
 }

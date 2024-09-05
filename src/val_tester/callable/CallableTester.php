@@ -22,6 +22,11 @@ class CallableTester implements ValTesterCallableInterface
      */
     protected $callable;
 
+    public function __construct(callable $callable)
+    {
+        $this->setCallable($callable);
+    }
+
     /**
      * testValue
      * @param $value

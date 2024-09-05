@@ -21,19 +21,20 @@ class ListChoiceTesterTest extends TestCase
 
     public function setUp(): void
     {
-        $this->tester = new ListChoiceTester();
         $this->testClass = new StdClass();
         $this->choices = ['foo', 'bar', 5, $this->testClass];
-        $this->tester->setChoices($this->choices);
+        $this->tester = new ListChoiceTester($this->choices);
     }
 
     /**
-     * testSetGetChoices
+     * testConstructSetGetChoices
+     * @covers \pvc\validator\val_tester\list_choice\ListChoiceTester::__construct
      * @covers \pvc\validator\val_tester\list_choice\ListChoiceTester::setChoices
      * @covers \pvc\validator\val_tester\list_choice\ListChoiceTester::getChoices
      */
-    public function testSetGetChoices(): void
+    public function testConstructSetGetChoices(): void
     {
+        self::assertInstanceOf(ListChoiceTester::class, $this->tester);
         self::assertEquals($this->choices, $this->tester->getChoices());
     }
 

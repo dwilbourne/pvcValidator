@@ -17,6 +17,6 @@ class CTypeTesterPrintable extends CallableTester
 {
     public function __construct()
     {
-        $this->setCallable('ctype_print');
+        parent::__construct('ctype_print');
     }
 }
