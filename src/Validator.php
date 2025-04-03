@@ -7,8 +7,10 @@ declare(strict_types=1);
 
 namespace pvc\validator;
 
+use pvc\interfaces\msg\DomainCatalogLoaderInterface;
 use pvc\interfaces\msg\MsgInterface;
 use pvc\interfaces\validator\ValidatorInterface;
+use pvc\validator\messages\ValidatorCatalogLoader;
 
 /**
  * Class ValidatorAbstract
@@ -84,6 +86,15 @@ abstract class Validator implements ValidatorInterface
     {
         return $this->msg;
     }
+
+    /**
+     * @return DomainCatalogLoaderInterface
+     */
+    public function getDomainCatalogLoader(): DomainCatalogLoaderInterface
+    {
+        return new ValidatorCatalogLoader();
+    }
+
 
     /**
      * setMsg

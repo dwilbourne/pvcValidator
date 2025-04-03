@@ -12,6 +12,7 @@ use pvc\interfaces\validator\ValTesterInterface;
 
 /**
  * Class IsNotNull
+ * @implements ValTesterInterface<mixed>
  */
 class IsNotNull implements ValTesterInterface
 {

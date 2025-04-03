@@ -10,6 +10,8 @@ use pvc\validator\val_tester\ctype\CTypeTesterAlphaNumeric;
 
 class CTypeTesterAlphaNumericTest extends TestCase
 {
+    protected CTypeTesterAlphaNumeric $tester;
+
     public function setUp(): void
     {
         $this->tester = new CTypeTesterAlphaNumeric();

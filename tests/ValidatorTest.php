@@ -9,6 +9,7 @@ namespace pvcTests\validator;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use pvc\interfaces\msg\DomainCatalogLoaderInterface;
 use pvc\interfaces\msg\MsgInterface;
 use pvc\validator\Validator;
 
@@ -36,6 +37,15 @@ class ValidatorTest extends TestCase
     {
         $this->validator->setMsg($this->msg);
         self::assertEquals($this->msg, $this->validator->getMsg());
+    }
+
+    /**
+     * @return void
+     * @covers \pvc\validator\Validator::getDomainCatalogLoader
+     */
+    public function testGetCatalogLoader(): void
+    {
+        self::assertInstanceOf(DomainCatalogLoaderInterface::class, $this->validator->getDomainCatalogLoader());
     }
 
     /**

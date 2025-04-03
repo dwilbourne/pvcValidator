@@ -22,13 +22,12 @@
 	"minimum-stability": "dev",
 	"require": {
 		"pvc/err": "*",
+		"pvc/msg": "*",
 		"pvc/interfaces": "*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9",
 		"pvc/testing-traits": "*",
-		"squizlabs/php_codesniffer": "*",
-		"friendsofphp/php-cs-fixer": "*",
 		"phpstan/phpstan": "*"
 	}
 }
