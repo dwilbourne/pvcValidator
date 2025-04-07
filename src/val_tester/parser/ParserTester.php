@@ -8,12 +8,13 @@ declare(strict_types=1);
 namespace pvc\validator\val_tester\parser;
 
 use pvc\interfaces\parser\ParserInterface;
-use pvc\interfaces\validator\valtesters\ValTesterParserInterface;
+use pvc\interfaces\validator\ValTesterInterface;
 
 /**
  * Class ParserTester
+ * @implements ValTesterInterface<string>
  */
-class ParserTester implements ValTesterParserInterface
+class ParserTester implements ValTesterInterface
 {
     /**
      * @var ParserInterface

@@ -8,14 +8,13 @@ declare(strict_types=1);
 
 namespace pvc\validator\val_tester\callable;
 
-use pvc\interfaces\validator\valtesters\ValTesterCallableInterface;
+use pvc\interfaces\validator\ValTesterInterface;
 
 /**
  * Class CallableTester
- * @template DateType
- * @implements  ValTesterCallableInterface<DateType>
+ * @implements  ValTesterInterface<mixed>
  */
-class CallableTester implements ValTesterCallableInterface
+class CallableTester implements ValTesterInterface
 {
     /**
      * @var callable|null
