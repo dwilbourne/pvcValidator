@@ -15,6 +15,7 @@ use pvc\validator\messages\ValidatorCatalogLoader;
 /**
  * Class ValidatorAbstract
  * @template DataType
+ *
  * @implements ValidatorInterface<DataType>
  */
 abstract class Validator implements ValidatorInterface
@@ -30,7 +31,7 @@ abstract class Validator implements ValidatorInterface
     protected bool $required = true;
 
     /**
-     * @param MsgInterface $msg
+     * @param  MsgInterface  $msg
      */
     public function __construct(MsgInterface $msg)
     {
@@ -39,7 +40,9 @@ abstract class Validator implements ValidatorInterface
 
     /**
      * validate
-     * @param DataType $data
+     *
+     * @param  DataType  $data
+     *
      * @return bool
      */
     public function validate($data = null): bool
@@ -80,6 +83,7 @@ abstract class Validator implements ValidatorInterface
 
     /**
      * getMsg
+     *
      * @return MsgInterface
      */
     public function getMsg(): MsgInterface
@@ -98,7 +102,8 @@ abstract class Validator implements ValidatorInterface
 
     /**
      * setMsg
-     * @param MsgInterface $msg
+     *
+     * @param  MsgInterface  $msg
      */
     public function setMsg(MsgInterface $msg): void
     {
@@ -114,7 +119,7 @@ abstract class Validator implements ValidatorInterface
     }
 
     /**
-     * @param bool $required
+     * @param  bool  $required
      */
     public function setRequired(bool $required): void
     {
@@ -128,7 +133,9 @@ abstract class Validator implements ValidatorInterface
 
     /**
      * testValue
+     *
      * @param $data<DataType>
+     *
      * @return bool
      */
     abstract protected function testValue(mixed $data): bool;

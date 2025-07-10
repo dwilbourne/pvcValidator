@@ -3,7 +3,7 @@
 namespace pvcTests\validator\val_tester\null;
 
 use PHPUnit\Framework\TestCase;
-use pvc\validator\val_tester\null\IsNotNull;
+use pvc\validator\val_tester\null_empty\IsNotNull;
 
 class IsNotNullTest extends TestCase
 {
@@ -16,7 +16,7 @@ class IsNotNullTest extends TestCase
 
     /**
      * @return void
-     * @covers \pvc\validator\val_tester\null\IsNotNull::testValue
+     * @covers \pvc\validator\val_tester\null_empty\IsNotNull::testValue
      */
     public function testIsNotNull(): void
     {

@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace pvc\validator\val_tester\null;
+namespace pvc\validator\val_tester\null_empty;
 
 use pvc\interfaces\validator\ValTesterInterface;
 
