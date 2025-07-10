@@ -3,20 +3,20 @@
 namespace pvcTests\validator\val_tester\null;
 
 use PHPUnit\Framework\TestCase;
-use pvc\validator\val_tester\null_empty\IsNotNull;
+use pvc\validator\val_tester\null_empty\IsNotNullTester;
 
 class IsNotNullTest extends TestCase
 {
-    protected IsNotNull $tester;
+    protected IsNotNullTester $tester;
 
     public function setUp(): void
     {
-        $this->tester = new IsNotNull();
+        $this->tester = new IsNotNullTester();
     }
 
     /**
      * @return void
-     * @covers \pvc\validator\val_tester\null_empty\IsNotNull::testValue
+     * @covers \pvc\validator\val_tester\null_empty\IsNotNullTester::testValue
      */
     public function testIsNotNull(): void
     {

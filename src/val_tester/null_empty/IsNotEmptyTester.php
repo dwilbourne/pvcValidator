@@ -11,14 +11,14 @@ namespace pvc\validator\val_tester\null_empty;
 use pvc\interfaces\validator\ValTesterInterface;
 
 /**
- * Class CanBeNull
+ * Class IsNotNull
  *
  * @implements ValTesterInterface<mixed>
  */
-class IsEmpty implements ValTesterInterface
+class IsNotEmptyTester implements ValTesterInterface
 {
     public function testValue(mixed $value): bool
     {
-        return empty($value);
+        return !empty($value);
     }
 }
